@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archive — BelMath</title>
+  <meta name="description" content="Browse verified problems and solutions from previous olympiads">
+  <link rel="icon" type="image/svg+xml" href="../img/logo.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="../" class="logo">
+          <img src="../img/logo.svg" alt="BelMath Logo" class="logo-img" onerror="this.style.display='none'">
+          <span>BelMath</span>
+        </a>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="../">Home</a></li>
+            <li><a href="../tracks/">Training Tracks</a></li>
+            <li><a href="../problems/">Problem Bank</a></li>
+            <li><a href="../contests/">Contests</a></li>
+            <li><a href="./" class="active">Archive</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="section archive-section" style="padding-top: 40px;">
+    <div class="container">
+      <h1 class="section-title">Past Years Archive</h1>
+      <p class="section-subtitle">Browse verified problems and solutions from previous olympiads</p>
+      
+      <div class="archive-controls">
+        <button class="archive-filter active" onclick="filterArchive('all')">All Years</button>
+        <button class="archive-filter" onclick="filterArchive('school')">School Stage</button>
+        <button class="archive-filter" onclick="filterArchive('regional')">Regional Stage</button>
+        <button class="archive-filter" onclick="filterArchive('national')">National Stage</button>
+      </div>
+      
+      <div class="archive-grid">
+        <a href="2024/" class="archive-card">
+          <div class="archive-year">2024</div>
+          <div class="archive-info">12 problems</div>
+        </a>
+        <a href="2023/" class="archive-card">
+          <div class="archive-year">2023</div>
+          <div class="archive-info">15 problems</div>
+        </a>
+        <a href="2022/" class="archive-card">
+          <div class="archive-year">2022</div>
+          <div class="archive-info">14 problems</div>
+        </a>
+        <a href="2021/" class="archive-card">
+          <div class="archive-year">2021</div>
+          <div class="archive-info">13 problems</div>
+        </a>
+        <a href="2020/" class="archive-card">
+          <div class="archive-year">2020</div>
+          <div class="archive-info">16 problems</div>
+        </a>
+        <a href="2019/" class="archive-card">
+          <div class="archive-year">2019</div>
+          <div class="archive-info">12 problems</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div>
+          <p><strong>BelMath</strong><br>Making olympiad mathematics in Belarus fair and accessible</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function filterArchive(type) {
+      document.querySelectorAll('.archive-filter').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
+

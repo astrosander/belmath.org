@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BelMath — Belarus Olympiad Mathematics</title>
+  <meta name="description" content="Structured training programs, competitive contests, and verified archives, designed for students without access to elite coaching. Making olympiad mathematics in Belarus fair and accessible.">
+  <link rel="icon" type="image/svg+xml" href="img/logo.svg">
+  <link rel="icon" type="image/x-icon" href="img/logo.ico">
+  <link rel="apple-touch-icon" href="img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="./" class="logo">
+          <img src="img/logo.svg" alt="BelMath Logo" class="logo-img" onerror="this.style.display='none'">
+          <span>BelMath</span>
+        </a>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="./" class="active">Home</a></li>
+            <li><a href="tracks/">Training Tracks</a></li>
+            <li><a href="problems/">Problem Bank</a></li>
+            <li><a href="contests/">Contests</a></li>
+            <li><a href="archive/">Archive</a></li>
+          </ul>
+        </nav>
+        <div class="mobile-nav" id="mobile-nav-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>BelMath — Belarus Olympiad Mathematics</h1>
+      <p>Structured training programs, competitive contests, and verified archives, designed for students without access to elite coaching.</p>
+      
+      <div class="hero-actions">
+        <a href="tracks/" class="btn btn-primary">
+          <i class="fas fa-route"></i>
+          Begin Training Track
+        </a>
+        <a href="problems/" class="btn btn-secondary">
+          <i class="fas fa-search"></i>
+          Problem Bank
+        </a>
+        <a href="contests/" class="btn btn-secondary">
+          <i class="fas fa-trophy"></i>
+          Contests and Results
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Training Tracks Section -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Training Tracks</h2>
+      <p class="section-subtitle">Structured learning paths designed for students at every level of mathematical competition</p>
+      
+      <div class="tracks-grid">
+        <div class="track-card">
+          <div class="track-icon">
+            <i class="fas fa-layer-group"></i>
+          </div>
+          <h3 class="track-title">Foundations</h3>
+          <p class="track-description">
+            Master the fundamentals of algebra and combinatorics. This track covers essential problem-solving techniques, number theory basics, and geometric reasoning. Perfect for beginners or students preparing for their first regional stage.
+          </p>
+          <a href="tracks/foundations/" class="btn-track">
+            Begin Training
+          </a>
+        </div>
+        
+        <div class="track-card">
+          <div class="track-icon">
+            <i class="fas fa-map-marked-alt"></i>
+          </div>
+          <h3 class="track-title">Regional Stage Prep</h3>
+          <p class="track-description">
+            Comprehensive preparation for regional mathematics olympiads. Includes advanced algebra, geometry, number theory, and combinatorics problems with step-by-step solutions. Designed to bridge the gap between school curriculum and olympiad level.
+          </p>
+          <a href="tracks/regional/" class="btn-track">
+            Begin Training
+          </a>
+        </div>
+        
+        <div class="track-card">
+          <div class="track-icon">
+            <i class="fas fa-flag-checkered"></i>
+          </div>
+          <h3 class="track-title">National Stage Prep</h3>
+          <p class="track-description">
+            Advanced training for the national mathematics olympiad. Features challenging problems from past years, proof techniques, and strategic problem-solving approaches. For students aiming to compete at the highest level.
+          </p>
+          <a href="tracks/national/" class="btn-track">
+            Begin Training
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem of the Week Section -->
+  <section class="section potw-section">
+    <div class="container">
+      <div class="potw-container">
+        <div class="potw-header">
+          <div>
+            <h2 class="potw-title">Problem of the Week</h2>
+            <p style="color: var(--text-secondary); margin-top: 8px;">Weekly challenge problems to enhance your problem-solving skills</p>
+          </div>
+          <span class="potw-badge">Week 42</span>
+        </div>
+        
+        <div class="potw-content">
+          <div class="potw-problem">
+            <strong>Problem:</strong> Let <em>n</em> be a positive integer. Prove that among any <em>n + 1</em> integers, there exist two whose difference is divisible by <em>n</em>.
+          </div>
+          
+          <div class="potw-submit">
+            <input type="text" class="potw-input" placeholder="Enter your answer or solution approach..." id="potw-answer">
+            <button class="btn btn-primary" onclick="submitPotw()">
+              <i class="fas fa-paper-plane"></i>
+              Submit
+            </button>
+          </div>
+        </div>
+        
+        <div class="leaderboard">
+          <h3 class="leaderboard-title">This Week's Leaderboard</h3>
+          <ul class="leaderboard-list">
+            <li class="leaderboard-item">
+              <div class="leaderboard-rank">1</div>
+              <div class="leaderboard-name">Alex M.</div>
+              <div class="leaderboard-score">✓ Solved</div>
+            </li>
+            <li class="leaderboard-item">
+              <div class="leaderboard-rank">2</div>
+              <div class="leaderboard-name">Maria K.</div>
+              <div class="leaderboard-score">✓ Solved</div>
+            </li>
+            <li class="leaderboard-item">
+              <div class="leaderboard-rank">3</div>
+              <div class="leaderboard-name">Dmitry S.</div>
+              <div class="leaderboard-score">Partial</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Archive Section -->
+  <section class="section archive-section">
+    <div class="container">
+      <h2 class="section-title">Past Years Archive</h2>
+      <p class="section-subtitle">Browse verified problems and solutions from previous olympiads</p>
+      
+      <div class="archive-controls">
+        <button class="archive-filter active" onclick="filterArchive('all')">All Years</button>
+        <button class="archive-filter" onclick="filterArchive('school')">School Stage</button>
+        <button class="archive-filter" onclick="filterArchive('regional')">Regional Stage</button>
+        <button class="archive-filter" onclick="filterArchive('national')">National Stage</button>
+      </div>
+      
+      <div class="archive-grid">
+        <a href="archive/2024/" class="archive-card">
+          <div class="archive-year">2024</div>
+          <div class="archive-info">12 problems</div>
+        </a>
+        <a href="archive/2023/" class="archive-card">
+          <div class="archive-year">2023</div>
+          <div class="archive-info">15 problems</div>
+        </a>
+        <a href="archive/2022/" class="archive-card">
+          <div class="archive-year">2022</div>
+          <div class="archive-info">14 problems</div>
+        </a>
+        <a href="archive/2021/" class="archive-card">
+          <div class="archive-year">2021</div>
+          <div class="archive-info">13 problems</div>
+        </a>
+        <a href="archive/2020/" class="archive-card">
+          <div class="archive-year">2020</div>
+          <div class="archive-info">16 problems</div>
+        </a>
+        <a href="archive/2019/" class="archive-card">
+          <div class="archive-year">2019</div>
+          <div class="archive-info">12 problems</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Operational Section -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">For Organizers and Educators</h2>
+      <p class="section-subtitle">Professional tools for contest organization and student assignment management</p>
+      
+      <div class="operational-grid">
+        <div class="operational-card">
+          <div class="operational-icon">
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <h3 class="operational-title">Contest Organization</h3>
+          <p class="operational-description">
+            Organize school or regional mathematics contests using our comprehensive platform. Configure problems, manage participants, and generate results automatically.
+          </p>
+          <a href="organize/" class="btn-track">
+            Access Organizer Suite
+          </a>
+        </div>
+        
+        <div class="operational-card">
+          <div class="operational-icon">
+            <i class="fas fa-chalkboard-teacher"></i>
+          </div>
+          <h3 class="operational-title">Teacher Assignment Portal</h3>
+          <p class="operational-description">
+            Create custom problem sets for your students. Track progress, provide feedback, and build structured learning paths tailored to your classroom needs.
+          </p>
+          <a href="teachers/" class="btn-track">
+            Access Teacher Portal
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proof Tiles Section -->
+  <section class="section proof-section">
+    <div class="container">
+      <h2 class="section-title">BelMath by the Numbers</h2>
+      
+      <div class="proof-grid">
+        <div class="proof-tile">
+          <div class="proof-number">1,247</div>
+          <div class="proof-label">Problems in Bank</div>
+        </div>
+        <div class="proof-tile">
+          <div class="proof-number">892</div>
+          <div class="proof-label">Solutions Reviewed</div>
+        </div>
+        <div class="proof-tile">
+          <div class="proof-number">156</div>
+          <div class="proof-label">Schools Using BelMath</div>
+        </div>
+        <div class="proof-tile">
+          <div class="proof-number">23</div>
+          <div class="proof-label">Regions Covered</div>
+        </div>
+        <div class="proof-tile">
+          <div class="proof-number">42</div>
+          <div class="proof-label">Weeks Active</div>
+        </div>
+        <div class="proof-tile">
+          <div class="proof-number" style="font-size: 20px; line-height: 1.4;">
+            Updated<br>Today
+          </div>
+          <div class="proof-label">Last Updated</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div>
+          <p>
+            <strong>BelMath</strong><br>
+            Making olympiad mathematics in Belarus fair and accessible
+          </p>
+        </div>
+        <div>
+          <p>
+            Structured training programs, competitive contests, and verified archives<br>
+            Designed for students without access to elite coaching
+          </p>
+        </div>
+        <div>
+          <p>
+            <em>Math as the foundation</em><br>
+            Supporting physics and informatics success
+          </p>
+        </div>
+      </div>
+      <p style="font-size: 12px; color: var(--text-secondary); opacity: 0.85; margin-top: 24px; text-align: center;">
+        © 2024 BelMath. All materials provided for educational purposes.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Problem of the Week submission
+    function submitPotw() {
+      const answer = document.getElementById('potw-answer').value;
+      if (answer.trim()) {
+        alert('Thank you for your submission! We\'ll review it shortly.');
+        document.getElementById('potw-answer').value = '';
+      } else {
+        alert('Please enter your answer or solution approach.');
+      }
+    }
+
+    // Archive filtering
+    function filterArchive(type) {
+      document.querySelectorAll('.archive-filter').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      // Filter logic would go here
+      console.log('Filtering by:', type);
+    }
+
+    // Mobile navigation toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+      if (mobileNavToggle) {
+        mobileNavToggle.addEventListener('click', function() {
+          // Mobile menu toggle logic
+          alert('Mobile menu - to be implemented');
+        });
+      }
+    });
+
+    // Update last updated date
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = new Date();
+      const dateStr = today.toLocaleDateString('en-US', { 
+        month: 'short', 
+        day: 'numeric',
+        year: 'numeric'
+      });
+      // This would update the "Last Updated" tile if needed
+    });
+  </script>
+</body>
+</html>
+

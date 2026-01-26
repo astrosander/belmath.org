@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contests and Results — BelMath</title>
+  <meta name="description" content="Participate in mathematics contests and view results">
+  <link rel="icon" type="image/svg+xml" href="../img/logo.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="../" class="logo">
+          <img src="../img/logo.svg" alt="BelMath Logo" class="logo-img" onerror="this.style.display='none'">
+          <span>BelMath</span>
+        </a>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="../">Home</a></li>
+            <li><a href="../tracks/">Training Tracks</a></li>
+            <li><a href="../problems/">Problem Bank</a></li>
+            <li><a href="./" class="active">Contests</a></li>
+            <li><a href="../archive/">Archive</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 40px;">
+    <div class="container">
+      <h1 class="section-title">Contests and Results</h1>
+      <p class="section-subtitle">Participate in mathematics contests and view past results</p>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; margin-top: 40px;">
+        <div style="background: var(--surface-color); padding: 32px; border-radius: 16px; box-shadow: var(--shadow-md); border: 1px solid var(--border-color);">
+          <h3 style="font-size: 22px; margin-bottom: 16px; color: var(--text-primary);">
+            <i class="fas fa-calendar-check" style="color: var(--primary-color); margin-right: 12px;"></i>
+            Upcoming Contests
+          </h3>
+          <p style="color: var(--text-secondary); margin-bottom: 24px;">Check out scheduled mathematics contests</p>
+          <a href="#" class="btn-track">View Schedule</a>
+        </div>
+        
+        <div style="background: var(--surface-color); padding: 32px; border-radius: 16px; box-shadow: var(--shadow-md); border: 1px solid var(--border-color);">
+          <h3 style="font-size: 22px; margin-bottom: 16px; color: var(--text-primary);">
+            <i class="fas fa-trophy" style="color: var(--accent-color); margin-right: 12px;"></i>
+            Past Results
+          </h3>
+          <p style="color: var(--text-secondary); margin-bottom: 24px;">Browse results from previous contests</p>
+          <a href="#" class="btn-track">View Results</a>
+        </div>
+        
+        <div style="background: var(--surface-color); padding: 32px; border-radius: 16px; box-shadow: var(--shadow-md); border: 1px solid var(--border-color);">
+          <h3 style="font-size: 22px; margin-bottom: 16px; color: var(--text-primary);">
+            <i class="fas fa-users" style="color: var(--success-color); margin-right: 12px;"></i>
+            Leaderboards
+          </h3>
+          <p style="color: var(--text-secondary); margin-bottom: 24px;">See top performers across all contests</p>
+          <a href="#" class="btn-track">View Leaderboard</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div>
+          <p><strong>BelMath</strong><br>Making olympiad mathematics in Belarus fair and accessible</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+
