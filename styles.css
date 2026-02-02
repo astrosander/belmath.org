@@ -809,3 +809,28 @@ body::before {
   }
 }
 
+/* PDF Icon Styles for Archive */
+.archive-section a[href$=".pdf"]::before,
+.archive-section a[href$=".PDF"]::before,
+section a[href$=".pdf"]::before,
+section a[href$=".PDF"]::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url('img/PDF_not_active.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 8px;
+  vertical-align: middle;
+  transition: background-image 0.2s;
+}
+
+.archive-section a[href$=".pdf"]:hover::before,
+.archive-section a[href$=".PDF"]:hover::before,
+section a[href$=".pdf"]:hover::before,
+section a[href$=".PDF"]:hover::before {
+  background-image: url('img/PDF_active.svg');
+}
+
