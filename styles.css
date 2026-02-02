@@ -62,7 +62,7 @@ body::before {
 /* Header */
 .header {
   background: var(--surface-color);
-  padding: 12px 0;
+  padding: 6px 0;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
@@ -79,13 +79,15 @@ body::before {
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   font-size: 26px;
   font-weight: 700;
   color: var(--primary-color);
   text-decoration: none;
   letter-spacing: -0.01em;
   transition: color 0.2s ease;
+  margin: 0;
+  padding: 0;
 }
 
 .logo:hover {
@@ -93,9 +95,11 @@ body::before {
 }
 
 .logo-img {
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   object-fit: contain;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links {
