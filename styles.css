@@ -52,6 +52,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: -0.01em;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 body::before {
@@ -67,15 +70,15 @@ body::before {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 0 12px;
+  padding: 0 10px;
 }
 
 /* Header */
 .header {
   background: var(--surface-color);
-  padding: 6px 0;
+  padding: 2px 0;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
@@ -117,7 +120,7 @@ body::before {
 
 .nav-links {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   list-style: none;
 }
 
@@ -125,39 +128,24 @@ body::before {
   color: var(--text-secondary);
   text-decoration: none;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 18px;
   letter-spacing: -0.01em;
-  transition: all 0.3s ease;
-  position: relative;
+  transition: all 0.2s ease;
   padding: 4px 0;
-}
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--primary-color);
-  transition: width 0.3s ease;
+  border-bottom: 2px solid transparent;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
   color: var(--primary-color);
-}
-
-.nav-links a:hover::after,
-.nav-links a.active::after {
-  width: 100%;
+  border-bottom-color: var(--primary-color);
 }
 
 /* Hero Section */
 .hero {
   background: var(--primary-color);
   color: white;
-  padding: 40px 0 45px;
+  padding: 24px 0 28px;
   position: relative;
   border-bottom: 3px solid var(--primary-dark);
 }
@@ -165,7 +153,7 @@ body::before {
 .hero-content {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 20px;
 }
 
 .hero-logo-container {
@@ -191,7 +179,7 @@ body::before {
 .hero h1 {
   font-size: 48px;
   font-weight: 700;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
@@ -199,7 +187,7 @@ body::before {
 .hero p {
   font-size: 20px;
   opacity: 0.95;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   font-weight: 400;
   letter-spacing: -0.01em;
   line-height: 1.6;
@@ -207,14 +195,14 @@ body::before {
 
 .hero-actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   justify-content: flex-start;
   flex-wrap: wrap;
-  margin-top: 16px;
+  margin-top: 12px;
 }
 
 .btn {
-  padding: 8px 16px;
+  padding: 6px 12px;
   border: none;
   border-radius: 6px;
   font-weight: 600;
@@ -253,14 +241,14 @@ body::before {
 
 /* Section Styles */
 .section {
-  padding: 32px 0;
+  padding: 24px 0;
 }
 
 .section-title {
   font-size: 36px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: var(--text-primary);
   letter-spacing: -0.01em;
   line-height: 1.3;
@@ -271,7 +259,7 @@ body::before {
   text-align: center;
   color: var(--text-secondary);
   max-width: 700px;
-  margin: 0 auto 20px;
+  margin: 0 auto 12px;
   line-height: 1.6;
   font-weight: 400;
 }
@@ -280,42 +268,27 @@ body::before {
 .tracks-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
+  gap: 12px;
+  margin-top: 12px;
 }
 
 .track-card {
   background: var(--surface-color);
-  padding: 20px;
+  padding: 16px;
   border-radius: 8px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   border: 1px solid var(--border-color);
+  border-top: 3px solid transparent;
   transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-.track-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: var(--primary-color);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.2s ease;
-}
-
 .track-card:hover {
   border-color: var(--primary-color);
+  border-top-color: var(--primary-color);
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 0.08);
-}
-
-.track-card:hover::before {
-  transform: scaleX(1);
 }
 
 .track-icon {
@@ -326,7 +299,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   font-size: 24px;
   color: white;
   transition: background 0.2s ease;
@@ -339,7 +312,7 @@ body::before {
 .track-title {
   font-size: 22px;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: var(--text-primary);
   letter-spacing: -0.01em;
   line-height: 1.3;
@@ -348,7 +321,7 @@ body::before {
 .track-description {
   color: var(--text-secondary);
   line-height: 1.6;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   flex: 1;
   font-size: 15px;
 }
@@ -356,7 +329,7 @@ body::before {
 .btn-track {
   background: var(--primary-color);
   color: white;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 6px;
   text-decoration: none;
   font-weight: 600;
@@ -380,14 +353,14 @@ body::before {
 
 .archive-controls {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .archive-filter {
-  padding: 8px 16px;
+  padding: 6px 12px;
   background: var(--surface-color);
   border: 1px solid var(--border-color);
   border-radius: 6px;
@@ -409,15 +382,16 @@ body::before {
 .archive-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
-  margin-top: 16px;
+  gap: 10px;
+  margin-top: 12px;
 }
 
 .archive-card {
   background: var(--surface-color);
-  padding: 16px;
+  padding: 12px;
   border-radius: 6px;
   border: 1px solid var(--border-color);
+  border-top: 3px solid transparent;
   text-align: center;
   transition: all 0.2s ease;
   text-decoration: none;
@@ -426,35 +400,19 @@ body::before {
   position: relative;
 }
 
-.archive-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: var(--primary-color);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.2s ease;
-}
-
 .archive-card:hover {
   border-color: var(--primary-color);
+  border-top-color: var(--primary-color);
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 0.08);
   text-decoration: none;
   color: inherit;
-}
-
-.archive-card:hover::before {
-  transform: scaleX(1);
 }
 
 .archive-year {
   font-size: 24px;
   font-weight: 700;
   color: var(--primary-color);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   letter-spacing: -0.01em;
 }
 
@@ -471,7 +429,7 @@ body::before {
 .potw-container {
   background: var(--surface-color);
   border-radius: 8px;
-  padding: 24px;
+  padding: 20px;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.08);
   border: 1px solid var(--border-color);
   max-width: 900px;
@@ -493,7 +451,7 @@ body::before {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   flex-wrap: wrap;
   gap: 12px;
 }
@@ -509,38 +467,38 @@ body::before {
 .potw-badge {
   background: var(--primary-color);
   color: white;
-  padding: 6px 12px;
+  padding: 4px 10px;
   border-radius: 4px;
   font-size: 13px;
   font-weight: 600;
 }
 
 .potw-content {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .potw-problem {
   background: var(--bg-color);
-  padding: 16px;
+  padding: 12px;
   border-radius: 6px;
   border: 1px solid var(--border-color);
   border-left: 4px solid var(--primary-color);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   font-size: 16px;
   line-height: 1.7;
 }
 
 .potw-submit {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .potw-input {
   flex: 1;
   min-width: 200px;
-  padding: 10px 14px;
+  padding: 8px 12px;
   border: 1px solid var(--border-color);
   border-radius: 6px;
   font-size: 15px;
@@ -556,13 +514,13 @@ body::before {
 }
 
 .leaderboard {
-  margin-top: 16px;
+  margin-top: 12px;
 }
 
 .leaderboard-title {
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: var(--text-primary);
 }
 
@@ -574,10 +532,10 @@ body::before {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 10px;
+  padding: 8px;
   background: var(--bg-color);
   border-radius: 8px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .leaderboard-rank {
@@ -608,41 +566,26 @@ body::before {
 .operational-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-  margin-top: 16px;
+  gap: 12px;
+  margin-top: 12px;
 }
 
 .operational-card {
   background: var(--surface-color);
-  padding: 20px;
+  padding: 16px;
   border-radius: 8px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   border: 1px solid var(--border-color);
+  border-top: 3px solid transparent;
   transition: all 0.2s ease;
   text-align: center;
   position: relative;
 }
 
-.operational-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: var(--primary-color);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.2s ease;
-}
-
 .operational-card:hover {
   border-color: var(--primary-color);
+  border-top-color: var(--primary-color);
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 0.08);
-}
-
-.operational-card:hover::before {
-  transform: scaleX(1);
 }
 
 .operational-icon {
@@ -653,7 +596,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 12px;
+  margin: 0 auto 8px;
   font-size: 24px;
   color: white;
   transition: background 0.2s ease;
@@ -666,7 +609,7 @@ body::before {
 .operational-title {
   font-size: 20px;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: var(--text-primary);
   letter-spacing: -0.01em;
 }
@@ -674,7 +617,7 @@ body::before {
 .operational-description {
   color: var(--text-secondary);
   line-height: 1.6;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   font-size: 15px;
 }
 
@@ -686,48 +629,33 @@ body::before {
 .proof-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-  margin-top: 16px;
+  gap: 10px;
+  margin-top: 12px;
 }
 
 .proof-tile {
   background: var(--surface-color);
-  padding: 16px;
+  padding: 12px;
   border-radius: 6px;
   text-align: center;
   border: 1px solid var(--border-color);
+  border-top: 3px solid transparent;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   transition: all 0.2s ease;
   position: relative;
 }
 
-.proof-tile::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: var(--primary-color);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.2s ease;
-}
-
 .proof-tile:hover {
   border-color: var(--primary-color);
+  border-top-color: var(--primary-color);
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 0.08);
-}
-
-.proof-tile:hover::before {
-  transform: scaleX(1);
 }
 
 .proof-number {
   font-size: 42px;
   font-weight: 700;
   color: var(--primary-color);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   letter-spacing: -0.02em;
   line-height: 1;
 }
@@ -741,15 +669,15 @@ body::before {
 /* Footer */
 .footer {
   background: var(--surface-color);
-  padding: 24px 0 20px;
+  padding: 16px 0 14px;
   border-top: 1px solid var(--border-color);
-  margin-top: 24px;
+  margin-top: auto;
 }
 
 .footer-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
+  gap: 12px;
   text-align: center;
 }
 
@@ -779,12 +707,12 @@ body::before {
   }
   
   .hero {
-    padding: 28px 0 32px;
+    padding: 20px 0 24px;
   }
 
   .hero-content {
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
   }
 
   .hero-logo-container {
@@ -826,7 +754,7 @@ body::before {
   }
 
   .section {
-    padding: 24px 0;
+    padding: 20px 0;
   }
 
   .section-title {
