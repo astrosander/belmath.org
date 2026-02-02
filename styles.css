@@ -144,10 +144,31 @@ body::before {
 /* Hero Section */
 .hero {
   background: var(--primary-color);
+  background-image: url('img/team/photo_127@06-08-2025_16-25-41.jpg');
+  background-size: cover;
+  background-position: center 35%;
+  background-repeat: no-repeat;
   color: white;
   padding: 24px 0 28px;
   position: relative;
   border-bottom: 3px solid var(--primary-dark);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--primary-color);
+  opacity: 0.7;
+  z-index: 0;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-content {
@@ -157,7 +178,7 @@ body::before {
 }
 
 .hero-logo-container {
-  flex: 0 0 30%;
+  flex: 0 0 20%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -172,7 +193,7 @@ body::before {
 }
 
 .hero-text-container {
-  flex: 0 0 70%;
+  flex: 0 0 80%;
   text-align: left;
 }
 
