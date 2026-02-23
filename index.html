@@ -17,6 +17,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .no-pdf-icon::before {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
   <!-- Header -->
@@ -70,6 +75,32 @@
           Contests and Results
         </a>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- International Team Selection Section -->
+  <section class="section" style="padding-top: 0; padding-bottom: 16px;">
+    <div class="container">
+      <div style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); padding: 14px 16px; border-radius: 0 0 12px 12px; box-shadow: var(--shadow-lg); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: rgba(255, 255, 255, 0.05); border-radius: 50%; transform: translate(30%, -30%);"></div>
+        <div style="position: absolute; bottom: 0; left: 0; width: 100px; height: 100px; background: rgba(255, 255, 255, 0.03); border-radius: 50%; transform: translate(-30%, 30%);"></div>
+        
+        <div style="position: relative; z-index: 1; display: flex; align-items: center; gap: 12px;">
+          <img src="img/icons/IMO_logo.svg" alt="Belarus Math Team Selection IMO 2025" style="height: 40px; width: auto; object-fit: contain; flex-shrink: 0;">
+          <img src="img/icons/Trophy_Flat_Icon_GIF_Animation.gif" alt="Trophy" style="width: 48px; height: 48px; object-fit: contain; flex-shrink: 0;">
+          <div style="flex: 1; min-width: 0;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <h2 style="font-size: 20px; font-weight: 700; margin: 0; color: white; letter-spacing: -0.02em;">Belarus Math Team Selection</h2>
+            </div>
+            <p style="color: rgba(255, 255, 255, 0.85); font-size: 12px; margin: 0; line-height: 1.4;">
+              RMM 2025 • 20 problems • 5 days
+            </p>
+          </div>
+          <a href="problems/selection/IMO_selection_2025.pdf" class="btn-track no-pdf-icon" style="background: white; color: var(--primary-color); border: none; font-weight: 600; padding: 10px 20px; font-size: 14px; white-space: nowrap; flex-shrink: 0; transition: all 0.3s ease;" target="_blank" onmouseover="this.style.background='var(--primary-tint-soft)'; this.style.color='var(--primary-dark)'; this.style.transform='scale(1.02)'" onmouseout="this.style.background='white'; this.style.color='var(--primary-color)'; this.style.transform='scale(1)'">
+            Download
+          </a>
         </div>
       </div>
     </div>
