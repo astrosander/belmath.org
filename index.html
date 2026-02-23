@@ -17,6 +17,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <!-- MathJax for LaTeX rendering -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
   <style>
     .no-pdf-icon::before {
       display: none !important;
@@ -54,6 +70,19 @@
     </div>
   </header>
 
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="mobile-menu-close" id="mobile-menu-close">
+      <i class="fas fa-times"></i>
+    </button>
+    <ul class="mobile-menu-links">
+      <li><a href="./" class="active">Home</a></li>
+      <li><a href="tracks/">Training Tracks</a></li>
+      <li><a href="contests/">Contests</a></li>
+      <li><a href="archive/">Archive</a></li>
+    </ul>
+  </div>
+
   <!-- Hero Section -->
   <section class="hero">
     <div class="container">
@@ -67,7 +96,7 @@
       
       <div class="hero-actions">
         <a href="tracks/" class="btn btn-primary">
-          <img src="img/icons/Map_path.svg" alt="Route" style="width: 24px; height: 24px; object-fit: contain; display: inline-block; vertical-align: middle;">
+          <img src="img/icons/Map_path.svg" alt="Route" style="width: 24px; height: 24px; object-fit: contain; display: inline-block; vertical-align: middle; filter: brightness(0) invert(1);">
           Begin Training Track
         </a>
         <a href="contests/" class="btn btn-secondary">
@@ -81,9 +110,9 @@
   </section>
 
   <!-- International Team Selection Section -->
-  <section class="section" style="padding-top: 0; padding-bottom: 16px;">
+  <section class="section" style="padding-top: 0; padding-bottom: 8px;">
     <div class="container">
-      <div style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); padding: 14px 16px; border-radius: 0 0 12px 12px; box-shadow: var(--shadow-lg); position: relative; overflow: hidden;">
+      <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%); padding: 14px 16px; border-radius: 0 0 12px 12px; box-shadow: var(--shadow-lg); position: relative; overflow: hidden;">
         <div style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: rgba(255, 255, 255, 0.05); border-radius: 50%; transform: translate(30%, -30%);"></div>
         <div style="position: absolute; bottom: 0; left: 0; width: 100px; height: 100px; background: rgba(255, 255, 255, 0.03); border-radius: 50%; transform: translate(-30%, 30%);"></div>
         
@@ -98,7 +127,7 @@
               RMM 2025 • 20 problems • 5 days
             </p>
           </div>
-          <a href="archive/2025/" class="btn-track no-pdf-icon" style="background: white; color: var(--primary-color); border: none; font-weight: 600; padding: 10px 20px; font-size: 14px; white-space: nowrap; flex-shrink: 0; transition: all 0.3s ease;" onmouseover="this.style.background='var(--primary-tint-soft)'; this.style.color='var(--primary-dark)'; this.style.transform='scale(1.02)'" onmouseout="this.style.background='white'; this.style.color='var(--primary-color)'; this.style.transform='scale(1)'">
+          <a href="archive/2025/" class="btn-track no-pdf-icon" style="background: white; color: #0f172a; border: none; font-weight: 600; padding: 10px 20px; font-size: 14px; white-space: nowrap; flex-shrink: 0; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);" onmouseover="this.style.background='#f8fafc'; this.style.color='#0f172a'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)'" onmouseout="this.style.background='white'; this.style.color='#0f172a'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'">
             View
           </a>
         </div>
@@ -107,7 +136,7 @@
   </section>
 
   <!-- Training Tracks Section -->
-  <section class="section">
+  <section class="section" style="background: var(--bg-color);">
     <div class="container">
       <h2 class="section-title">Training Tracks</h2>
       <p class="section-subtitle">Structured learning paths designed for students at every level of mathematical competition</p>
@@ -175,13 +204,16 @@
         
         <div class="potw-content">
           <div class="potw-problem">
-            <strong>Problem:</strong> Let <em>n</em> be a positive integer. Prove that among any <em>n + 1</em> integers, there exist two whose difference is divisible by <em>n</em>.
+            <strong>Problem:</strong> For positive integer $$m=2^k\cdot t,$$ where $k$ is a non-negative integer, $t$ is an odd integer, and let $$f(m)=t^{1-k}.$$ Prove that for any positive integer $n$ and for any positive odd number $a\le n$, $$\prod_{m=1}^n f(m)$$ is a multiple of $a$.
+            <div style="margin-top: 12px; font-style: italic; color: var(--text-secondary); font-size: 14px;">
+              — Dzianis Vistunou — IMO 2025
+            </div>
           </div>
           
           <div class="potw-submit">
             <input type="text" class="potw-input" placeholder="Enter your answer or solution approach..." id="potw-answer">
             <button class="btn btn-primary" onclick="submitPotw()">
-              <img src="img/icons/paper_plane.svg" alt="Submit" style="width: 20px; height: 20px; object-fit: contain; display: inline-block; vertical-align: middle; filter: brightness(0) saturate(100%) invert(25%) sepia(95%) saturate(2000%) hue-rotate(145deg) brightness(95%) contrast(90%);">
+              <img src="img/icons/paper_plane.svg" alt="Submit" style="width: 20px; height: 20px; object-fit: contain; display: inline-block; vertical-align: middle; filter: brightness(0) invert(1);">
               Submit
             </button>
           </div>
@@ -393,12 +425,41 @@
     // Mobile navigation toggle
     document.addEventListener('DOMContentLoaded', function() {
       const mobileNavToggle = document.getElementById('mobile-nav-toggle');
-      if (mobileNavToggle) {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileMenuClose = document.getElementById('mobile-menu-close');
+      
+      if (mobileNavToggle && mobileMenu) {
         mobileNavToggle.addEventListener('click', function() {
-          // Mobile menu toggle logic
-          alert('Mobile menu - to be implemented');
+          mobileMenu.classList.add('active');
+          document.body.style.overflow = 'hidden';
         });
       }
+      
+      if (mobileMenuClose && mobileMenu) {
+        mobileMenuClose.addEventListener('click', function() {
+          mobileMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      }
+      
+      // Close menu when clicking outside
+      if (mobileMenu) {
+        mobileMenu.addEventListener('click', function(e) {
+          if (e.target === mobileMenu) {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+      
+      // Close menu when clicking on a link
+      const mobileMenuLinks = document.querySelectorAll('.mobile-menu-links a');
+      mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
     });
 
     // Update last updated date
@@ -415,6 +476,7 @@
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HE93GE7BH5"></script>
   <script src="ga.js"></script>
+  <script src="mobile-menu.js"></script>
 </body>
 </html>
 

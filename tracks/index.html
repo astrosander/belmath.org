@@ -32,9 +32,25 @@
             <li><a href="../archive/">Archive</a></li>
           </ul>
         </nav>
+        <div class="mobile-nav" id="mobile-nav-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
       </div>
     </div>
   </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <button class="mobile-menu-close" id="mobile-menu-close">
+      <i class="fas fa-times"></i>
+    </button>
+    <ul class="mobile-menu-links">
+      <li><a href="../">Home</a></li>
+      <li><a href="./" class="active">Training Tracks</a></li>
+      <li><a href="../contests/">Contests</a></li>
+      <li><a href="../archive/">Archive</a></li>
+    </ul>
+  </div>
 
   <section class="section" style="padding-top: 40px;">
     <div class="container">
@@ -108,6 +124,46 @@
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HE93GE7BH5"></script>
   <script src="../ga.js"></script>
+  <script>
+    // Mobile navigation toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileMenuClose = document.getElementById('mobile-menu-close');
+      
+      if (mobileNavToggle && mobileMenu) {
+        mobileNavToggle.addEventListener('click', function() {
+          mobileMenu.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      }
+      
+      if (mobileMenuClose && mobileMenu) {
+        mobileMenuClose.addEventListener('click', function() {
+          mobileMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      }
+      
+      if (mobileMenu) {
+        mobileMenu.addEventListener('click', function(e) {
+          if (e.target === mobileMenu) {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+      
+      const mobileMenuLinks = document.querySelectorAll('.mobile-menu-links a');
+      mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
+    });
+  </script>
+  <script src="../mobile-menu.js"></script>
 </body>
 </html>
 
