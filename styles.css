@@ -315,7 +315,7 @@ body::before {
 .track-icon {
   display: inline-block;
   vertical-align: middle;
-  margin-right: 12px;
+  margin-right: 6px;
   margin-bottom: 0;
 }
 
@@ -605,7 +605,7 @@ body::before {
 .operational-icon {
   display: inline-block;
   vertical-align: middle;
-  margin-right: 12px;
+  margin-right: 6px;
   margin-bottom: 0;
 }
 
