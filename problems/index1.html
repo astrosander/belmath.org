@@ -3,6 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      var lang = null;
+      try {
+        var q = new URLSearchParams(location.search).get('lang');
+        if (q === 'en' || q === 'ru') { localStorage.setItem('lang', q); }
+        lang = localStorage.getItem('lang');
+      } catch (e) {}
+      if (lang !== 'en' && lang !== 'ru') {
+        var first = ((navigator.languages && navigator.languages[0]) || navigator.language || 'en').toLowerCase();
+        lang = (first.indexOf('ru') === 0 || first.indexOf('be') === 0) ? 'ru' : 'en';
+      }
+      document.documentElement.lang = lang;
+      if (lang === 'ru') {
+        var h = document.documentElement;
+        h.className += ' i18n-pending';
+        setTimeout(function () { h.className = h.className.replace(' i18n-pending', ''); }, 1500);
+      }
+    })();
+  </script>
   <title>Belarus Geometry Movement — BelMath</title>
   <meta name="description" content="Search and practice olympiad geometry problems">
   <!-- Open Graph / Facebook -->
@@ -37,13 +57,15 @@
         <nav>
           <ul class="nav-links">
             <li><a href="../">Home</a></li>
-            <li><a href="../tracks/">Training Tracks</a></li>
-            <li><a href="./" class="active">Geometry</a></li>
-            <li><a href="../contests/">Contests</a></li>
             <li><a href="../archive/">Archive</a></li>
           </ul>
         </nav>
-        <div class="mobile-nav" id="mobile-nav-toggle">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-set-lang="en">EN</button>
+          <span aria-hidden="true">|</span>
+          <button type="button" data-set-lang="ru">RU</button>
+        </div>
+        <div class="mobile-nav" id="mobile-nav-toggle" role="button" tabindex="0" aria-label="Open menu">
           <i class="fas fa-bars"></i>
         </div>
       </div>
@@ -52,16 +74,18 @@
 
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobile-menu">
-    <button class="mobile-menu-close" id="mobile-menu-close">
+    <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">
       <i class="fas fa-times"></i>
     </button>
     <ul class="mobile-menu-links">
       <li><a href="../">Home</a></li>
-      <li><a href="../tracks/">Training Tracks</a></li>
-      <li><a href="./" class="active">Geometry</a></li>
-      <li><a href="../contests/">Contests</a></li>
       <li><a href="../archive/">Archive</a></li>
     </ul>
+    <div class="lang-switch lang-switch-mobile" role="group" aria-label="Language">
+      <button type="button" data-set-lang="en">EN</button>
+      <span aria-hidden="true">|</span>
+      <button type="button" data-set-lang="ru">RU</button>
+    </div>
   </div>
 
   <section class="section" style="padding-top: 24px;">
@@ -76,7 +100,6 @@
             <option value="all">All Topics</option>
             <option value="geometry">Geometry</option>
             <option value="algebra">Algebra</option>
-            <option value="combinatorics">Combinatorics</option>
           </select>
           <select id="levelFilter" style="padding: 8px 12px; border: 2px solid var(--border-color); border-radius: 6px; font-size: 14px;">
             <option value="all">All Levels</option>
@@ -114,6 +137,7 @@
     </div>
   </footer>
 
+  <script src="../i18n.js"></script>
   <script>
     // Problem database in JSON format
     const problems = [
@@ -121,6 +145,7 @@
         "id": 1,
         "photo": "../geometry/photos/photo_1@12-04-2024_14-43-55.jpg",
         "statement": "A line passing through vertex $C$ parallel to $AB$ intersects the $A$-excircle $\\Gamma$ at points $E$ and $F$. Let $M$ be the midpoint of $AB$. Lines $ME$ and $MF$ intersect $\\Gamma$ again at points $P$ and $Q$. Lines $CP$ and $CQ$ intersect $AB$ at $X$ and $Y$. Prove that $XA = YB$.",
+        "statement_ru": "Прямая, проходящая через вершину $C$ параллельно $AB$, пересекает $A$-вневписанную окружность $\\Gamma$ в точках $E$ и $F$. Обозначим через $M$ середину $AB$. Прямые $ME$ и $MF$ повторно пересекают $\\Gamma$ в точках $P$ и $Q$. Прямые $CP$ и $CQ$ пересекают $AB$ в точках $X$ и $Y$. Докажите, что $XA = YB$.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -130,6 +155,7 @@
         "id": 2,
         "photo": "../geometry/photos/photo_2@13-04-2024_03-30-59.jpg",
         "statement": "<strong>Conic Butterfly.</strong> Three conics have four common points. A common secant cuts three segments with endpoints on each of the conics. Prove that if the centers of two segments coincide, then the center of the third also coincides with them.",
+        "statement_ru": "<strong>Коническая бабочка.</strong> Три коники имеют четыре общие точки. Общая секущая высекает три отрезка с концами на каждой из коник. Докажите, что если середины двух отрезков совпадают, то середина третьего также совпадает с ними.",
         "proposedBy": "Folklore",
         "source": "Folklore",
         "level": "advanced",
@@ -139,6 +165,7 @@
         "id": 3,
         "photo": "../geometry/photos/photo_3@13-04-2024_09-33-45.jpg",
         "statement": "EGMO 2024, P2",
+        "statement_ru": "EGMO 2024, задача 2",
         "proposedBy": "EGMO",
         "source": "EGMO 2024, Problem 2",
         "level": "advanced",
@@ -148,6 +175,7 @@
         "id": 4,
         "photo": "../geometry/photos/photo_4@14-04-2024_01-32-09.jpg",
         "statement": "Problem for grades 7-8. Let $BE$ and $CF$ be perpendiculars from vertices $B$ and $C$ to the internal angle bisector of angle $A$ of triangle $ABC$ respectively. Prove that lines $BF$ and $CE$ intersect on the external angle bisector of angle $\\angle BAC$.",
+        "statement_ru": "Задача для 7-8 классов. Из вершин $B$ и $C$ треугольника $ABC$ на биссектрису внутреннего угла $A$ опущены перпендикуляры $BE$ и $CF$ соответственно. Докажите, что прямые $BF$ и $CE$ пересекаются на биссектрисе внешнего угла $\\angle BAC$.",
         "proposedBy": "Matvei Zorka",
         "source": "Original problem",
         "level": "grade7-8",
@@ -157,6 +185,7 @@
         "id": 5,
         "photo": "../geometry/photos/photo_5@14-04-2024_09-01-33.jpg",
         "statement": "Let $ABCD$ be a non-symmetric quadrilateral such that $\\angle ABC = \\angle ADC$. $E$ is a point on $AC$ equidistant from $B$ and $D$. $G$ is a point isogonally conjugate to $E$ with respect to triangle $BCD$. Prove that $ABGD$ is a parallelogram.",
+        "statement_ru": "Дан несимметричный четырёхугольник $ABCD$, в котором $\\angle ABC = \\angle ADC$. Точка $E$ на $AC$ равноудалена от $B$ и $D$. Точка $G$ изогонально сопряжена точке $E$ относительно треугольника $BCD$. Докажите, что $ABGD$ является параллелограммом.",
         "proposedBy": "Andrei Karmanovich",
         "source": "Original problem",
         "level": "advanced",
@@ -166,6 +195,7 @@
         "id": 6,
         "photo": "../geometry/photos/photo_6@15-04-2024_03-31-51.jpg",
         "statement": "Sharygin Geometry Olympiad 2024, Grade 8-9, Oral Round, P4",
+        "statement_ru": "Олимпиада Шарыгина 2024, 8-9 классы, устный тур, задача 4",
         "proposedBy": "Sharygin Olympiad",
         "source": "Sharygin Geometry Olympiad 2024, 8-9, Oral, P4",
         "level": "grade9-10",
@@ -175,6 +205,7 @@
         "id": 7,
         "photo": "../geometry/photos/photo_7@15-04-2024_08-03-16.jpg",
         "statement": "From the 'Problem of the Day' in Zubronok, 2022. The extension of altitude $BH$ of acute triangle $ABC$ intersects its circumcircle $\\Omega$ at point $B'$. Let $M$ and $H'$ be points on side $AC$ such that $AM = MC$ and $AH = H'C$. Line $BM$ and the circumcircle of triangle $B'MH'$ intersect $\\Omega$ again at points $F$ and $G$ respectively. Rays $FH$ and $GH'$ intersect at $P$. Prove that the perpendicular from $P$ to $AC$ and lines $FB'$ and $AC$ have a common point.",
+        "statement_ru": "Из «Задачи дня» в «Зубрёнке», 2022. Продолжение высоты $BH$ остроугольного треугольника $ABC$ пересекает его описанную окружность $\\Omega$ в точке $B'$. Точки $M$ и $H'$ на стороне $AC$ таковы, что $AM = MC$ и $AH = H'C$. Прямая $BM$ и описанная окружность треугольника $B'MH'$ повторно пересекают $\\Omega$ в точках $F$ и $G$ соответственно. Лучи $FH$ и $GH'$ пересекаются в точке $P$. Докажите, что перпендикуляр, опущенный из $P$ на $AC$, и прямые $FB'$ и $AC$ имеют общую точку.",
         "proposedBy": "Matvei Zorka",
         "source": "Zubronok 2022",
         "level": "advanced",
@@ -184,6 +215,7 @@
         "id": 8,
         "photo": "../geometry/photos/photo_8@16-04-2024_07-02-25.jpg",
         "statement": "<strong>Parabolic point</strong> named after Yauheni Sheshukou?!",
+        "statement_ru": "<strong>Параболическая точка</strong> имени Yauheni Sheshukou?!",
         "proposedBy": "Vadzim Miletski",
         "source": "Original observation",
         "level": "advanced",
@@ -193,6 +225,7 @@
         "id": 9,
         "photo": "../geometry/photos/photo_9@17-04-2024_04-59-58.jpg",
         "statement": "From the 'Problem of the Day' in Zubronok, 2022. In parallelogram $ABCD$ with $\\angle A = 60°$, points $M$ and $N$ are midpoints of sides $AB$ and $BC$ respectively. Circles $(ACD)$ and $(BMN)$ intersect at points $P$ and $Q$. The angle bisector of $\\angle B$ intersects line $PQ$ at point $L$. Prove that $DL \\parallel AC$.",
+        "statement_ru": "Из «Задачи дня» в «Зубрёнке», 2022. В параллелограмме $ABCD$, где $\\angle A = 60°$, точки $M$ и $N$ являются серединами сторон $AB$ и $BC$ соответственно. Окружности $(ACD)$ и $(BMN)$ пересекаются в точках $P$ и $Q$. Биссектриса угла $\\angle B$ пересекает прямую $PQ$ в точке $L$. Докажите, что $DL \\parallel AC$.",
         "proposedBy": "Matvei Zorka",
         "source": "Zubronok 2022",
         "level": "grade9-10",
@@ -202,6 +235,7 @@
         "id": 10,
         "photo": "../geometry/photos/photo_11@18-04-2024_12-03-01.jpg",
         "statement": "Prove that the area of the blue part is three times smaller than the area of the regular hexagon.",
+        "statement_ru": "Докажите, что площадь синей части в три раза меньше площади правильного шестиугольника.",
         "proposedBy": "Matvei Zorka",
         "source": "Original problem",
         "level": "grade9-10",
@@ -211,6 +245,7 @@
         "id": 11,
         "photo": "../geometry/photos/photo_12@20-04-2024_10-01-42.jpg",
         "statement": "Circle $\\omega$ touches side $BC$ of triangle at point $C$ and does not intersect other sides of the triangle. Circle $\\Gamma$ passes through point $A$ and touches circle $\\omega$ on line $AC$ and intersects line $AB$ at point $D$. On line $BC$ mark point $E$. Prove that the radical axis of circles $(EBD)$ and $\\omega$ does not depend on the radius of $\\omega$.",
+        "statement_ru": "Окружность $\\omega$ касается стороны $BC$ треугольника в точке $C$ и не пересекает другие его стороны. Окружность $\\Gamma$ проходит через точку $A$, касается окружности $\\omega$ в точке, лежащей на прямой $AC$, и пересекает прямую $AB$ в точке $D$. На прямой $BC$ отмечена точка $E$. Докажите, что радикальная ось окружностей $(EBD)$ и $\\omega$ не зависит от радиуса $\\omega$.",
         "proposedBy": "Andrei Karmanovich",
         "source": "Original problem",
         "level": "advanced",
@@ -220,6 +255,7 @@
         "id": 12,
         "photo": "../geometry/photos/photo_13@21-04-2024_06-02-58.jpg",
         "statement": "Try not to count category or All-Russian Olympiad in Mathematics 2024, 11.4",
+        "statement_ru": "Рубрика «Попробуй не считать», или Всероссийская олимпиада по математике 2024, 11.4",
         "proposedBy": "VSOSH",
         "source": "All-Russian Olympiad 2024, 11.4",
         "level": "grade11",
@@ -229,6 +265,7 @@
         "id": 13,
         "photo": "../geometry/photos/photo_14@21-04-2024_10-02-21.jpg",
         "statement": "All-Russian Olympiad in Mathematics 2024, 9.6 or another classic?",
+        "statement_ru": "Всероссийская олимпиада по математике 2024, 9.6, или очередная классика?",
         "proposedBy": "VSOSH",
         "source": "All-Russian Olympiad 2024, 9.6",
         "level": "grade9-10",
@@ -238,6 +275,7 @@
         "id": 14,
         "photo": "../geometry/photos/photo_15@22-04-2024_06-02-57.jpg",
         "statement": "On sides $AB$ and $BC$ of triangle $ABC$, points $D$ and $E$ are marked respectively such that $AD = CE$. From the incenter $I$ of triangle $ABC$, a perpendicular is drawn to line $DE$. Prove that this perpendicular passes through the midpoint of arc $ABC$ of circle $(ABC)$ if and only if $2AD = AC$.",
+        "statement_ru": "На сторонах $AB$ и $BC$ треугольника $ABC$ отмечены точки $D$ и $E$ соответственно так, что $AD = CE$. Из центра вписанной окружности $I$ треугольника $ABC$ опущен перпендикуляр на прямую $DE$. Докажите, что этот перпендикуляр проходит через середину дуги $ABC$ окружности $(ABC)$ тогда и только тогда, когда $2AD = AC$.",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -247,6 +285,7 @@
         "id": 15,
         "photo": "../geometry/photos/photo_16@24-04-2024_04-01-58.jpg",
         "statement": "You see everything in the picture. Colored circles are tangent. Do we need circles in this problem?",
+        "statement_ru": "Всё видно на картинке. Цветные окружности касаются. А нужны ли в этой задаче окружности?",
         "proposedBy": "Unknown",
         "source": "Original problem",
         "level": "grade9-10",
@@ -256,6 +295,7 @@
         "id": 16,
         "photo": "../geometry/photos/photo_17@28-04-2024_05-01-43.jpg",
         "statement": "Hexagon $ABCDEF$ is such that $ABCD$ is a parallelogram and $CDEF$ is an isosceles trapezoid with $DE \\parallel CF$. The circumcircle of triangle $AEF$ intersects line $CF$ at points $F$ and $P$. The circumcircle of triangle $BCF$ intersects line $CD$ at points $C$ and $Q$. Prove that the intersection point of $AP$ and $BQ$ is equidistant from lines $AB$ and $EF$.",
+        "statement_ru": "Шестиугольник $ABCDEF$ таков, что $ABCD$ является параллелограммом, а $CDEF$ является равнобокой трапецией, в которой $DE \\parallel CF$. Описанная окружность треугольника $AEF$ пересекает прямую $CF$ в точках $F$ и $P$. Описанная окружность треугольника $BCF$ пересекает прямую $CD$ в точках $C$ и $Q$. Докажите, что точка пересечения $AP$ и $BQ$ равноудалена от прямых $AB$ и $EF$.",
         "proposedBy": "Unknown",
         "source": "Original problem",
         "level": "advanced",
@@ -265,6 +305,7 @@
         "id": 17,
         "photo": "../geometry/photos/photo_18@29-04-2024_05-00-23.jpg",
         "statement": "A pretty good problem with a very bad solution...",
+        "statement_ru": "Довольно хорошая задача с очень плохим решением...",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -274,6 +315,7 @@
         "id": 18,
         "photo": "../geometry/photos/photo_19@08-05-2024_09-29-57.jpg",
         "statement": "On the plane there are three convex pairwise intersecting polygons $M_1$, $M_2$, $M_3$. It is known that $M_1 \\cap M_2 \\cap M_3 = \\emptyset$. Prove that there exists a point $O$ that does not belong to any of the polygons, such that every ray $[OA)$ intersects at least one of the polygons. Come up with and prove a generalization to $n$-dimensional space.",
+        "statement_ru": "На плоскости даны три выпуклых попарно пересекающихся многоугольника $M_1$, $M_2$, $M_3$. Известно, что $M_1 \\cap M_2 \\cap M_3 = \\emptyset$. Докажите, что существует точка $O$, не принадлежащая ни одному из многоугольников, такая, что любой луч $[OA)$ пересекает хотя бы один из многоугольников. Придумайте и докажите обобщение на $n$-мерное пространство.",
         "proposedBy": "BSU Open Olympiad",
         "source": "BSU Open Mathematical Olympiad 2024, P5",
         "level": "advanced",
@@ -283,6 +325,7 @@
         "id": 19,
         "photo": "../geometry/photos/photo_20@11-05-2024_09-24-57.jpg",
         "statement": "$F$ is the Feuerbach point",
+        "statement_ru": "Здесь $F$ обозначает точку Фейербаха",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original observation",
         "level": "advanced",
@@ -292,6 +335,7 @@
         "id": 20,
         "photo": "../geometry/photos/photo_21@12-05-2024_05-07-01.jpg",
         "statement": "In addition to yesterday's post",
+        "statement_ru": "В дополнение ко вчерашнему посту",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -301,6 +345,7 @@
         "id": 21,
         "photo": "../geometry/photos/photo_22@13-05-2024_05-31-01.jpg",
         "statement": "A pretty good problem from the recent Tournament of Towns",
+        "statement_ru": "Довольно хорошая задача с недавнего Турнира городов",
         "proposedBy": "Tournament of Towns",
         "source": "Tournament of Towns",
         "level": "advanced",
@@ -310,6 +355,7 @@
         "id": 22,
         "photo": "../geometry/photos/photo_23@14-05-2024_05-50-08.jpg",
         "statement": "Just an excellent problem from which I got incredible satisfaction. Prove that the red line is tangent.",
+        "statement_ru": "Просто отличная задача, от которой я получил невероятное удовольствие. Докажите, что красная прямая является касательной.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -319,6 +365,7 @@
         "id": 23,
         "photo": "../geometry/photos/photo_24@15-05-2024_05-14-01.jpg",
         "statement": "Jacobi's Theorem",
+        "statement_ru": "Теорема Якоби",
         "proposedBy": "Jacobi",
         "source": "Classical theorem",
         "level": "advanced",
@@ -327,6 +374,7 @@
       {
         "id": 24,
         "statement": "<strong>Kulinin's Theorem</strong>. There is a triangle $ABC$ and a line $l$ through the center of its circumcircle. Prove that when point $P$ moves along $l$, the pedal circle passes through a fixed point. Question for the most curious geometers: what is the fixed point when $l$ also passes through the incenter?",
+        "statement_ru": "<strong>Теорема Кулинина</strong>. Даны треугольник $ABC$ и прямая $l$, проходящая через центр его описанной окружности. Докажите, что при движении точки $P$ по прямой $l$ её подерная окружность проходит через фиксированную точку. Вопрос для самых любознательных геометров: что это за фиксированная точка, если $l$ проходит ещё и через центр вписанной окружности?",
         "proposedBy": "Kulinin",
         "source": "Classical theorem",
         "level": "advanced",
@@ -336,6 +384,7 @@
         "id": 25,
         "photo": "../geometry/photos/photo_25@17-05-2024_12-49-01.jpg",
         "statement": "Zero geometry on the second round of EGMO...",
+        "statement_ru": "Ноль геометрии во втором туре EGMO...",
         "proposedBy": "EGMO",
         "source": "EGMO observation",
         "level": "advanced",
@@ -345,6 +394,7 @@
         "id": 26,
         "photo": "../geometry/photos/photo_26@18-05-2024_05-31-47.jpg",
         "statement": "USA TSTST 2019, P5",
+        "statement_ru": "USA TSTST 2019, задача 5",
         "proposedBy": "USA TSTST",
         "source": "USA TSTST 2019, P5",
         "level": "advanced",
@@ -354,6 +404,7 @@
         "id": 27,
         "photo": "../geometry/photos/photo_27@19-05-2024_05-04-01.jpg",
         "statement": "Lemoine Circle",
+        "statement_ru": "Окружность Лемуана",
         "proposedBy": "Lemoine",
         "source": "Classical theorem",
         "level": "advanced",
@@ -363,6 +414,7 @@
         "id": 28,
         "photo": "../geometry/photos/photo_28@20-05-2024_05-41-01.jpg",
         "statement": "A good problem from Admin. Let $X$ be a variable point on the Euler circle. $Y$ is diametrically opposite to it. $H'$ is symmetric to $H$ with respect to $X$. Prove that line $YH'$ passes through a fixed point.",
+        "statement_ru": "Хорошая задача от админа. Точка $X$ движется по окружности Эйлера. Точка $Y$ диаметрально противоположна ей. Точка $H'$ симметрична $H$ относительно $X$. Докажите, что прямая $YH'$ проходит через фиксированную точку.",
         "proposedBy": "Admin",
         "source": "Original problem",
         "level": "advanced",
@@ -372,6 +424,7 @@
         "id": 29,
         "photo": "../geometry/photos/photo_29@23-05-2024_14-22-22.jpg",
         "statement": "[Image-based problem]",
+        "statement_ru": "[Задача по рисунку]",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -381,6 +434,7 @@
         "id": 30,
         "photo": "../geometry/photos/photo_30@24-05-2024_14-15-17.jpg",
         "statement": "[Image-based problem]",
+        "statement_ru": "[Задача по рисунку]",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -389,6 +443,7 @@
       {
         "id": 31,
         "statement": "A circle inscribed in a non-isosceles triangle $ABC$ touches sides $BC$, $CA$, and $AB$ at points $A_1$, $B_1$, and $C_1$ respectively. Three flies crawled along lines $AA_1$, $BB_1$, and $CC_1$ with constant speeds such that at one moment they were at points $A$, $B$, and $C$, and at another moment they were at points $A_1$, $B_1$, and $C_1$. After some time all three flies were on one line $p_1$, and at some other moment on line $p_2$. Prove that $p_1 \\perp p_2$.",
+        "statement_ru": "Вписанная окружность неравнобедренного треугольника $ABC$ касается сторон $BC$, $CA$ и $AB$ в точках $A_1$, $B_1$ и $C_1$ соответственно. По прямым $AA_1$, $BB_1$ и $CC_1$ с постоянными скоростями ползли три мухи, причём в некоторый момент они находились в точках $A$, $B$ и $C$, а в другой момент в точках $A_1$, $B_1$ и $C_1$. Через некоторое время все три мухи оказались на одной прямой $p_1$, а в какой-то другой момент на одной прямой $p_2$. Докажите, что $p_1 \\perp p_2$.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -398,6 +453,7 @@
         "id": 32,
         "photo": "../geometry/photos/photo_31@30-05-2024_10-10-00.jpg",
         "statement": "Let $F$ be the Feuerbach point and $G$ be the centroid of triangle $ABC$. Ray $FG$ intersects the circumcircle at $P$. Mark the centroid of triangle $PBC$. Let $AG_{PBC}$ and $FG$ intersect at $X$. Prove that $FG = 2GX$. Note: $F$ can be replaced by any point on the nine-point circle.",
+        "statement_ru": "Пусть $F$ и $G$ являются соответственно точкой Фейербаха и точкой пересечения медиан треугольника $ABC$. Луч $FG$ пересекает описанную окружность в точке $P$. Отметим точку пересечения медиан треугольника $PBC$. Прямые $AG_{PBC}$ и $FG$ пересекаются в точке $X$. Докажите, что $FG = 2GX$. Примечание: вместо $F$ можно взять любую точку окружности девяти точек.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -407,6 +463,7 @@
         "id": 33,
         "photo": "../geometry/photos/photo_32@02-06-2024_12-22-01.jpg",
         "statement": "Summer has begun, stress is prohibited. Try to write a solution with the minimum number of symbols 👀",
+        "statement_ru": "Лето началось, стресс запрещён. Попробуйте записать решение с минимальным количеством символов 👀",
         "proposedBy": "Vadzim Miletski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -416,6 +473,7 @@
         "id": 34,
         "photo": "../geometry/photos/photo_33@07-06-2024_05-32-14.jpg",
         "statement": "Summer continues, and the problem is not as good as last time. Perhaps I'm mistaken, but Anton Kotau simply counted angles in this problem (we count angles)",
+        "statement_ru": "Лето продолжается, а задача уже не так хороша, как в прошлый раз. Возможно, я ошибаюсь, но Anton Kotau в этой задаче просто посчитал углы (считаем углы)",
         "proposedBy": "Vadzim Miletski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -425,6 +483,7 @@
         "id": 35,
         "photo": "../geometry/photos/photo_34@09-06-2024_09-45-49.jpg",
         "statement": "Happy care about your favorite cat day! Here's a festive problem for you",
+        "statement_ru": "С Днём заботы о любимом коте! Вот вам праздничная задача",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "grade9-10",
@@ -434,6 +493,7 @@
         "id": 36,
         "photo": "../geometry/photos/photo_35@10-06-2024_05-02-07.jpg",
         "statement": "<strong>Problem from the Republican Olympiad proposed in Grade 9.</strong> Given acute triangle $ABC$. Points $D$ and $E$ are chosen on side $BC$ and the minor arc $BC$ such that $\\angle BAD = \\angle EAC$. The perpendicular bisector of segment $AD$ intersects the circumcircle at points $G$ and $F$. Prove that the orthocenter of triangle $GFE$ lies on side $BC$.",
+        "statement_ru": "<strong>Задача республиканской олимпиады, предлагавшаяся в 9 классе.</strong> Дан остроугольный треугольник $ABC$. На стороне $BC$ и на меньшей дуге $BC$ выбраны точки $D$ и $E$ соответственно так, что $\\angle BAD = \\angle EAC$. Серединный перпендикуляр к отрезку $AD$ пересекает описанную окружность в точках $G$ и $F$. Докажите, что ортоцентр треугольника $GFE$ лежит на стороне $BC$.",
         "proposedBy": "Matvei Zorka",
         "source": "Republican Olympiad",
         "level": "grade9-10",
@@ -443,6 +503,7 @@
         "id": 37,
         "photo": "../geometry/photos/photo_36@11-06-2024_05-00-38.jpg",
         "statement": "<strong>Continuing to publish problems from last year's Republican Olympiad. This time we offer you a problem proposed in Grade 10</strong> (unfortunately, with a spoiler). Given parallelogram $ABCD$. The incircle of triangle $ABC$ with center $I$ touches sides $BC$, $AC$, and $AB$ at points $P$, $Q$, $R$ respectively. $DI$ intersects side $BC$ at point $S$. It turned out that $\\angle RPD = 90°$. Prove that the circle built on $AS$ as diameter touches the circumcircle of triangle $PQD$.",
+        "statement_ru": "<strong>Продолжаем публиковать задачи прошлогодней республиканской олимпиады. На этот раз предлагаем вам задачу 10 класса</strong> (к сожалению, со спойлером). Дан параллелограмм $ABCD$. Вписанная окружность треугольника $ABC$ с центром $I$ касается сторон $BC$, $AC$ и $AB$ в точках $P$, $Q$, $R$ соответственно. Прямая $DI$ пересекает сторону $BC$ в точке $S$. Оказалось, что $\\angle RPD = 90°$. Докажите, что окружность, построенная на $AS$ как на диаметре, касается описанной окружности треугольника $PQD$.",
         "proposedBy": "Matvei Zorka",
         "source": "Republican Olympiad",
         "level": "grade9-10",
@@ -452,6 +513,7 @@
         "id": 38,
         "photo": "../geometry/photos/photo_37@15-06-2024_05-10-09.jpg",
         "statement": "What kind of statement? Correct, this is a fact that the bisectors of adjacent angles are perpendicular.",
+        "statement_ru": "Что за утверждение? Правильно, это факт о том, что биссектрисы смежных углов перпендикулярны.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Classical fact",
         "level": "grade7-8",
@@ -461,6 +523,7 @@
         "id": 39,
         "photo": "../geometry/photos/photo_38@17-06-2024_09-02-58.jpg",
         "statement": "Prove that the red arc is divided in half.",
+        "statement_ru": "Докажите, что красная дуга делится пополам.",
         "proposedBy": "Vadzim Miletski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -470,6 +533,7 @@
         "id": 40,
         "photo": "../geometry/photos/photo_39@20-06-2024_05-03-39.jpg",
         "statement": "While Zhenya doesn't have the opportunity to post, it's time for one of his favorite problems. The red circle is built as on a diameter. The violet circle is the nine-point circle of $BIC$. Prove that circles of different colors are perpendicular.",
+        "statement_ru": "Пока у Жени нет возможности публиковать посты, самое время для одной из его любимых задач. Красная окружность построена как на диаметре. Фиолетовая окружность является окружностью девяти точек треугольника $BIC$. Докажите, что окружности разных цветов перпендикулярны.",
         "proposedBy": "Taiwan TST",
         "source": "Taiwan TST 2015, P3",
         "level": "advanced",
@@ -479,6 +543,7 @@
         "id": 41,
         "photo": "../geometry/photos/photo_40@24-06-2024_10-53-50.jpg",
         "statement": "The red line is the radical axis. Prove that the perimeter is divided in half by the radical axis of the excircles.",
+        "statement_ru": "Красная прямая является радикальной осью. Докажите, что радикальная ось вневписанных окружностей делит периметр пополам.",
         "proposedBy": "Vadzim Miletski",
         "source": "Original problem",
         "level": "advanced",
@@ -488,6 +553,7 @@
         "id": 42,
         "photo": "../geometry/photos/photo_41@24-06-2024_11-21-46.jpg",
         "statement": "Forget the last post and enjoy a new <em>non</em>-obvious problem. Black lines are obtained by reflection from the sides of the triangle.",
+        "statement_ru": "Забудьте прошлый пост и наслаждайтесь новой <em>не</em>очевидной задачей. Чёрные прямые получены отражением относительно сторон треугольника.",
         "proposedBy": "Vadzim Miletski",
         "source": "Original problem",
         "level": "advanced",
@@ -497,6 +563,7 @@
         "id": 43,
         "photo": "../geometry/photos/photo_42@29-06-2024_16-07-03.jpg",
         "statement": "The incredible <em>Yauheni</em> gives our dear viewers this great problem. Put ❤️ if you love parabolas and 💔 otherwise.",
+        "statement_ru": "Невероятный <em>Yauheni</em> дарит нашим дорогим зрителям эту замечательную задачу. Ставьте ❤️, если любите параболы, и 💔 в противном случае.",
         "proposedBy": "Vadzim Miletski",
         "source": "Original problem",
         "level": "advanced",
@@ -506,6 +573,7 @@
         "id": 44,
         "photo": "../geometry/photos/photo_43@08-07-2024_13-05-23.jpg",
         "statement": "It was definitely somewhere, but where... $X$ is the orthocenter of triangle $BIC$.",
+        "statement_ru": "Это точно где-то было, но где... $X$ является ортоцентром треугольника $BIC$.",
         "proposedBy": "Vadzim Miletski",
         "source": "Original problem",
         "level": "advanced",
@@ -515,6 +583,7 @@
         "id": 45,
         "photo": "../geometry/photos/photo_44@14-07-2024_16-20-35.jpg",
         "statement": "Prove that two circles touch each other.",
+        "statement_ru": "Докажите, что две окружности касаются.",
         "proposedBy": "Vadzim Miletski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -524,6 +593,7 @@
         "id": 46,
         "photo": "../geometry/photos/photo_46@17-07-2024_09-38-27.jpg",
         "statement": "Op-op-op, first! Tangents parallel to sides",
+        "statement_ru": "Оп-оп-оп, первая! Касательные, параллельные сторонам",
         "proposedBy": "Vadzim Miletski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -533,6 +603,7 @@
         "id": 47,
         "photo": "../geometry/photos/photo_47@20-07-2024_07-01-35.jpg",
         "statement": "ISL 2023 G3. While Belarusians are resting and showing the best results in recent years, we begin the series 'problem from ISL 2023 that Zhenya told to post'",
+        "statement_ru": "ISL 2023 G3. Пока белорусы отдыхают и показывают лучшие результаты за последние годы, мы начинаем серию «задача из ISL 2023, которую Женя сказал выложить»",
         "proposedBy": "IMO Shortlist",
         "source": "ISL 2023, G3",
         "level": "advanced",
@@ -542,6 +613,7 @@
         "id": 49,
         "photo": "../geometry/photos/photo_49@23-07-2024_13-16-57.jpg",
         "statement": "Our channel reached 222 subscribers 🎉🎉🎉 And that means it's time to post an original problem from the most geometric admin of our channel! $H$ is the orthocenter, $O$ is the circumcenter.",
+        "statement_ru": "Наш канал набрал 222 подписчика 🎉🎉🎉 А это значит, что пора выложить авторскую задачу от самого геометрического админа нашего канала! $H$ является ортоцентром, $O$ является центром описанной окружности.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -551,6 +623,7 @@
         "id": 50,
         "photo": "../geometry/photos/photo_50@27-07-2024_13-30-54.jpg",
         "statement": "Today's problem is not ordinary. It is special. Did you know that exactly 124 years ago the Hamburger was invented?",
+        "statement_ru": "Сегодняшняя задача не обычная. Она особенная. А вы знали, что ровно 124 года назад был изобретён гамбургер?",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Based on USA TSTST 2024",
         "level": "advanced",
@@ -560,6 +633,7 @@
         "id": 51,
         "photo": "../geometry/photos/photo_51@29-07-2024_03-43-40.jpg",
         "statement": "IGO 2021 Elementary P3. A heart consists of three semicircles. We call a pair of points $(P, P')$ <strong>caring</strong> if $P$ and $P'$ lie on the heart and divide its perimeter in half. Let $(P, P')$, $(Q, Q')$ be two caring pairs. Tangents to the heart at points $P$, $P'$, $Q$, $Q'$ form a convex quadrilateral $XYZT$. It turned out that a circle can be circumscribed around this quadrilateral. What is the angle between $PP'$ and $QQ'$?",
+        "statement_ru": "IGO 2021, начальный уровень, задача 3. Сердечко состоит из трёх полуокружностей. Назовём пару точек $(P, P')$ <strong>заботливой</strong>, если $P$ и $P'$ лежат на сердечке и делят его периметр пополам. Пусть $(P, P')$, $(Q, Q')$ являются двумя заботливыми парами. Касательные к сердечку в точках $P$, $P'$, $Q$, $Q'$ образуют выпуклый четырёхугольник $XYZT$. Оказалось, что около этого четырёхугольника можно описать окружность. Чему равен угол между $PP'$ и $QQ'$?",
         "proposedBy": "IGO",
         "source": "IGO 2021 Elementary, P3",
         "level": "grade9-10",
@@ -569,6 +643,7 @@
         "id": 52,
         "photo": "../geometry/photos/photo_52@02-08-2024_04-54-57.jpg",
         "statement": "Good morning! Today we offer you to prove the following fact about the Feuerbach point",
+        "statement_ru": "Доброе утро! Сегодня предлагаем вам доказать следующий факт о точке Фейербаха",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -578,6 +653,7 @@
         "id": 53,
         "photo": "../geometry/photos/photo_53@11-08-2024_14-59-43.jpg",
         "statement": "What proofs of this fact do you know? Yellow points are isogonally conjugate with respect to the quadrilateral. Then the midpoint of the segment connecting them lies on the Gauss line",
+        "statement_ru": "Какие доказательства этого факта вы знаете? Жёлтые точки изогонально сопряжены относительно четырёхугольника. Тогда середина отрезка, соединяющего их, лежит на прямой Гаусса",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -587,6 +663,7 @@
         "id": 54,
         "photo": "../geometry/photos/photo_54@15-08-2024_10-15-34.jpg",
         "statement": "Let $l_a$ be the line symmetric to $BC$ with respect to the external bisector of angle $\\angle A$. Let $l_a$ intersect lines $AC$ and $AB$ at points $A_B$ and $A_C$. Similarly define points $B_A$, $B_C$, $C_A$ and $C_B$. Prove that the radical axis of circles $(A_B B_C C_A)$ and $(A_C B_A C_B)$ coincides with the Nagel line.",
+        "statement_ru": "Пусть $l_a$ есть прямая, симметричная $BC$ относительно внешней биссектрисы угла $\\angle A$. Пусть $l_a$ пересекает прямые $AC$ и $AB$ в точках $A_B$ и $A_C$. Аналогично определим точки $B_A$, $B_C$, $C_A$ и $C_B$. Докажите, что радикальная ось окружностей $(A_B B_C C_A)$ и $(A_C B_A C_B)$ совпадает с прямой Нагеля.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -596,6 +673,7 @@
         "id": 55,
         "photo": "../geometry/photos/photo_55@17-08-2024_07-00-46.jpg",
         "statement": "I'm sure someone came up with this before me, but it looks nice",
+        "statement_ru": "Уверен, что кто-то придумал это до меня, но выглядит красиво",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -605,6 +683,7 @@
         "id": 56,
         "photo": "../geometry/photos/photo_56@25-08-2024_15-29-53.jpg",
         "statement": "Summer will end soon, so I propose this drawing, once invented by me and refined by Matvei. The red line is the radical axis of two circles. Also propose answering an additional question: the center of homothety of which two circles coincides with the lower intersection point (which needs to be proved).",
+        "statement_ru": "Скоро закончится лето, поэтому предлагаю вот такой чертёж, когда-то придуманный мной и доработанный Matvei. Красная прямая является радикальной осью двух окружностей. Также предлагаю ответить на дополнительный вопрос: центр гомотетии каких двух окружностей совпадает с нижней точкой пересечения (это нужно доказать).",
         "proposedBy": "Vadzim Miletski",
         "source": "Original problem",
         "level": "advanced",
@@ -614,6 +693,7 @@
         "id": 58,
         "photo": "../geometry/photos/photo_58@01-09-2024_07-45-44.jpg",
         "statement": "Greetings, dear community! September first, Sunday, the perfect time to have fun with a problem from Yauheni Sheshukou.",
+        "statement_ru": "Приветствуем, дорогое сообщество! Первое сентября, воскресенье: идеальное время, чтобы развлечься задачей от Yauheni Sheshukou.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "grade9-10",
@@ -623,6 +703,7 @@
         "id": 59,
         "photo": "../geometry/photos/photo_59@06-09-2024_08-32-03.jpg",
         "statement": "Prove that if a hexagon has equal diagonals and parallel opposite sides, then a circle can be circumscribed around it. How is this related to the Lemoine circle?",
+        "statement_ru": "Докажите, что если у шестиугольника равны диагонали и параллельны противоположные стороны, то около него можно описать окружность. Как это связано с окружностью Лемуана?",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -632,6 +713,7 @@
         "id": 60,
         "photo": "../geometry/photos/photo_60@07-09-2024_13-04-27.jpg",
         "statement": "Prove that the sum of angles equals 180 degrees. At first glance, the problem may not seem very beautiful, but if you delve deeper...",
+        "statement_ru": "Докажите, что сумма углов равна 180 градусам. На первый взгляд задача может показаться не очень красивой, но если вникнуть глубже...",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "grade9-10",
@@ -641,6 +723,7 @@
         "id": 61,
         "photo": "../geometry/photos/photo_61@10-09-2024_13-14-21.jpg",
         "statement": "Our incredible admin Matvei Zorka made this wonderful observation. Three parabolas with foci $A$, $B$, and $C$ are externally tangent to each other. Prove that the sum of blue angles equals $360°$.",
+        "statement_ru": "Наш невероятный админ Matvei Zorka сделал это замечательное наблюдение. Три параболы с фокусами $A$, $B$ и $C$ попарно касаются друг друга внешним образом. Докажите, что сумма синих углов равна $360°$.",
         "proposedBy": "Matvei Zorka",
         "source": "Original problem",
         "level": "advanced",
@@ -650,6 +733,7 @@
         "id": 62,
         "photo": "../geometry/photos/photo_62@17-09-2024_16-45-56.jpg",
         "statement": "After entering BSU, the first thing Zhenya Sheshukou and Igor Shmygalev did was come up with this problem. (And what can you do when the only geometry at FPMI is analytic) $N^*$ is isogonally conjugate to point $N$ (Nagel point) with respect to triangle $BIC$.",
+        "statement_ru": "Поступив в БГУ, первым делом Zhenya Sheshukou и Igor Shmygalev придумали эту задачу. (А что ещё делать, когда единственная геометрия на ФПМИ аналитическая) $N^*$ изогонально сопряжена точке $N$ (точке Нагеля) относительно треугольника $BIC$.",
         "proposedBy": "Yauheni Sheshukou & Igor Shmygalev",
         "source": "Original problem",
         "level": "advanced",
@@ -659,6 +743,7 @@
         "id": 63,
         "photo": "../geometry/photos/photo_63@25-09-2024_12-56-30.jpg",
         "statement": "You are allowed to prove that the red Euler lines intersect at one point. Not proving is not allowed.",
+        "statement_ru": "Вам разрешается доказать, что красные прямые Эйлера пересекаются в одной точке. Не доказывать не разрешается.",
         "proposedBy": "Vadzim Miletski",
         "source": "Original problem",
         "level": "advanced",
@@ -668,6 +753,7 @@
         "id": 64,
         "photo": "../geometry/photos/photo_64@28-09-2024_05-21-09.jpg",
         "statement": "Good morning! We offer you to solve this good problem :)",
+        "statement_ru": "Доброе утро! Предлагаем вам решить эту хорошую задачу :)",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "grade9-10",
@@ -677,6 +763,7 @@
         "id": 65,
         "photo": "../geometry/photos/photo_65@08-10-2024_06-08-55.jpg",
         "statement": "A good problem from admin",
+        "statement_ru": "Хорошая задача от админа",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -686,6 +773,7 @@
         "id": 66,
         "photo": "../geometry/photos/photo_66@20-10-2024_11-00-54.jpg",
         "statement": "Greetings, dear community! I propose such a rest after a difficult variant of the tournament. The radii of two circles are equal.",
+        "statement_ru": "Приветствуем, дорогое сообщество! Предлагаю вот такой отдых после тяжёлого варианта турнира. Радиусы двух окружностей равны.",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -695,6 +783,7 @@
         "id": 67,
         "photo": "../geometry/photos/photo_67@03-11-2024_06-29-06.jpg",
         "statement": "Dear friends! We haven't had posts for a long time. However, today we have an excellent occasion. Our channel has reached as many as 300 interested geometers! Many thanks to everyone for such a large number. We will try to continue to please you with beautiful problems! On this occasion, we offer you to solve a problem authored by the incredible Matvei Zorka!",
+        "statement_ru": "Дорогие друзья! У нас давно не было постов. Однако сегодня есть отличный повод. Наш канал собрал целых 300 заинтересованных геометров! Огромное спасибо всем за такое большое число. Мы постараемся и дальше радовать вас красивыми задачами! По этому случаю предлагаем вам решить задачу авторства невероятного Matvei Zorka!",
         "proposedBy": "Matvei Zorka",
         "source": "Original problem",
         "level": "advanced",
@@ -704,6 +793,7 @@
         "id": 68,
         "photo": "../geometry/photos/photo_68@05-11-2024_11-18-19.jpg",
         "statement": "<strong>Problem.</strong> Let $I$ be the incenter of triangle $ABC$, $H$ be the base of its altitude dropped from vertex $A$. On the circumcircle of triangle $ABC$, points $P$ and $Q$ are taken such that $\\angle API = \\angle AQI = 90°$. Line $PQ$ intersects line $BC$ at point $S$. Prove that $\\angle ISC = \\angle AHI$.",
+        "statement_ru": "<strong>Задача.</strong> Пусть $I$ есть центр вписанной окружности треугольника $ABC$, $H$ есть основание его высоты, опущенной из вершины $A$. На описанной окружности треугольника $ABC$ взяты точки $P$ и $Q$ такие, что $\\angle API = \\angle AQI = 90°$. Прямая $PQ$ пересекает прямую $BC$ в точке $S$. Докажите, что $\\angle ISC = \\angle AHI$.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -713,6 +803,7 @@
         "id": 69,
         "photo": "../geometry/photos/photo_69@08-11-2024_03-38-43.jpg",
         "statement": "Good morning! ☺️",
+        "statement_ru": "Доброе утро! ☺️",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "grade9-10",
@@ -722,6 +813,7 @@
         "id": 70,
         "photo": "../geometry/photos/photo_70@10-11-2024_02-02-02.jpg",
         "statement": "Good morning, dear community! $N_9$ is the center of the nine-point circle. Prove that the marked angle is right.",
+        "statement_ru": "Доброе утро, дорогое сообщество! $N_9$ является центром окружности девяти точек. Докажите, что отмеченный угол прямой.",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "advanced",
@@ -731,6 +823,7 @@
         "id": 71,
         "photo": "../geometry/photos/photo_71@13-11-2024_02-00-00.jpg",
         "statement": "Greetings, dear community! Today you are invited to prove the following fact from Matvei Zorka (BelMO stage IV 9.8) about a regular hexagon: The side of the hexagon equals 1, from a point at the middle of one of the sides a ray is emitted that reflects from each of the sides of the hexagon. It turned out that after several reflections the ray returned to the native middle of the same side, and also the length of the ray turned out to be natural, prove that it is divisible by 3.",
+        "statement_ru": "Приветствуем, дорогое сообщество! Сегодня предлагаем вам доказать следующий факт от Matvei Zorka (IV этап BelMO, задача 9.8) о правильном шестиугольнике: сторона шестиугольника равна 1, из точки в середине одной из сторон выпущен луч, который отражается от каждой из сторон шестиугольника. Оказалось, что после нескольких отражений луч вернулся в родную середину той же стороны, а длина пути луча оказалась натуральной. Докажите, что она делится на 3.",
         "proposedBy": "Matvei Zorka",
         "source": "BelMO stage IV, Problem 9.8",
         "level": "grade9-10",
@@ -740,6 +833,7 @@
         "id": 72,
         "photo": "../geometry/photos/photo_72@21-11-2024_14-23-31.jpg",
         "statement": "Greetings! I propose to recall MGO-2024 and the problem by Grigory Zabaznov. More precisely, its generalization by Yauheni Sheshukou. Same-colored lines are isogonals.",
+        "statement_ru": "Приветствуем! Предлагаю вспомнить MGO-2024 и задачу Grigory Zabaznov. Точнее, её обобщение от Yauheni Sheshukou. Прямые одного цвета изогональны.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Generalization of MGO 2024",
         "level": "advanced",
@@ -749,6 +843,7 @@
         "id": 73,
         "photo": "../geometry/photos/photo_73@26-11-2024_05-04-32.jpg",
         "statement": "Greetings, dear community! We invite you to get acquainted with the following plot. As is known, through any three points that do not lie on one line, you can always draw a circle, and a unique one. If you think about variations of this statement, you can formulate the following: Fix a direction. Then through any three points that do not lie on one line, you can always draw a parabola whose axis is parallel to the given direction, and exactly one. Amazingly, it turns out that a huge number of facts that were true for circles remain true for parabolas with parallel axes. Below is the analog of Feuerbach's theorem.",
+        "statement_ru": "Приветствуем, дорогое сообщество! Предлагаем вам познакомиться со следующим сюжетом. Как известно, через любые три точки, не лежащие на одной прямой, всегда можно провести окружность, причём единственную. Если задуматься о вариациях этого утверждения, можно сформулировать следующее: зафиксируем направление. Тогда через любые три точки, не лежащие на одной прямой, всегда можно провести параболу, ось которой параллельна данному направлению, причём ровно одну. Удивительно, но оказывается, что огромное количество фактов, верных для окружностей, остаются верными и для парабол с параллельными осями. Ниже приведён аналог теоремы Фейербаха.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original observation",
         "level": "advanced",
@@ -758,6 +853,7 @@
         "id": 74,
         "photo": "../geometry/photos/photo_74@26-11-2024_05-04-56.jpg",
         "statement": "Also in terms of parabolas, you can formulate Miquel's theorem for a quadrilateral. But the strangest thing is that the 'parabolic' Miquel point will always lie on the parabola that touches all sides of the quadrilateral. Try to prove this fact yourself.",
+        "statement_ru": "Также в терминах парабол можно сформулировать теорему Микеля для четырёхугольника. Но самое странное в том, что «параболическая» точка Микеля всегда будет лежать на параболе, касающейся всех сторон четырёхугольника. Попробуйте доказать этот факт самостоятельно.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -767,6 +863,7 @@
         "id": 75,
         "photo": "../geometry/photos/photo_75@06-12-2024_08-51-04.jpg",
         "statement": "On the plane there is a unit square. Point $M$ is called <em>interesting</em> if inside the square there exist points $P$ and $Q$ such that $PQ = 1$ and $M$ is the midpoint of $PQ$. Find the locus of interesting points.",
+        "statement_ru": "На плоскости дан единичный квадрат. Точка $M$ называется <em>интересной</em>, если внутри квадрата существуют точки $P$ и $Q$ такие, что $PQ = 1$ и $M$ является серединой $PQ$. Найдите геометрическое место интересных точек.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "grade9-10",
@@ -776,6 +873,7 @@
         "id": 76,
         "photo": "../geometry/photos/photo_76@07-12-2024_15-05-00.jpg",
         "statement": "According to boring_problems/210",
+        "statement_ru": "По мотивам boring_problems/210",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Boring Problems 210",
         "level": "grade9-10",
@@ -785,6 +883,7 @@
         "id": 77,
         "photo": "../geometry/photos/photo_77@13-12-2024_04-18-53.jpg",
         "statement": "Greetings! Today on Friday the 13th we offer you to figure out this problem😈.",
+        "statement_ru": "Приветствуем! Сегодня, в пятницу 13-го, предлагаем вам разобраться с этой задачей😈.",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -794,6 +893,7 @@
         "id": 78,
         "photo": "../geometry/photos/photo_78@17-12-2024_06-19-00.jpg",
         "statement": "Greetings, dear community! We offer you to solve a problem that even a seventh grader has enough knowledge for!",
+        "statement_ru": "Приветствуем, дорогое сообщество! Предлагаем вам решить задачу, для которой хватит знаний даже семикласснику!",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "grade7-8",
@@ -803,6 +903,7 @@
         "id": 79,
         "photo": "../geometry/photos/photo_79@23-12-2024_03-02-57.jpg",
         "statement": "Good morning, dear community! We offer you as simple practice to solve the following problem. In isosceles triangle $ABC$ ($AB = AC$), mark the circumcenter $O$ and incenter $I$. Circles $(BIO)$ and $(ABC)$ intersect at point $D$. Prove that line $AD$ is tangent to circle $(BIO)$.",
+        "statement_ru": "Доброе утро, дорогое сообщество! Предлагаем вам в качестве простой практики решить следующую задачу. В равнобедренном треугольнике $ABC$ ($AB = AC$) отмечены центр описанной окружности $O$ и центр вписанной окружности $I$. Окружности $(BIO)$ и $(ABC)$ пересекаются в точке $D$. Докажите, что прямая $AD$ касается окружности $(BIO)$.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "grade9-10",
@@ -812,6 +913,7 @@
         "id": 80,
         "photo": "../geometry/photos/photo_81@31-12-2024_07-52-28.jpg",
         "statement": "Happy New Year from Olympiad Geometry! Prove that the blue garlands on the Christmas tree are parallel!",
+        "statement_ru": "С Новым годом от Олимпиадной геометрии! Докажите, что синие гирлянды на ёлке параллельны!",
         "proposedBy": "Vadzim Kamianetski",
         "source": "New Year problem",
         "level": "grade9-10",
@@ -821,6 +923,7 @@
         "id": 81,
         "photo": "../geometry/photos/photo_82@03-01-2025_09-04-06.jpg",
         "statement": "Greetings! Dear viewers, we sincerely congratulate you on the New Year!🎄🎄🎄 We hope that the only new thing this year will be new achievements and knowledge. Meanwhile, we invite you to return to the working rhythm and solve a simple exercise.",
+        "statement_ru": "Приветствуем! Дорогие зрители, искренне поздравляем вас с Новым годом!🎄🎄🎄 Надеемся, что единственным новым в этом году будут новые достижения и знания. А пока приглашаем вас вернуться в рабочий ритм и решить простое упражнение.",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "grade7-8",
@@ -830,6 +933,7 @@
         "id": 82,
         "photo": "../geometry/photos/photo_84@16-01-2025_00-02-03.jpg",
         "statement": "Good morning, friends! IZhO just finished, so we offer you to solve this interesting problem! IZhO 2025, P5. Convex hexagon $A_1C_2B_1B_2C_1A_2$ is inscribed in circle $\\Omega$. Rays $A_1B_1$ and $A_2B_2$ intersect at point $P$, and segments $A_1C_1$ and $A_2C_2$ at point $Q$. Circle $\\Gamma_1$ passes through points $B_1$ and $C_1$ and is orthogonal to $\\Omega$. Similarly, circle $\\Gamma_2$ passes through points $B_2$ and $C_2$ and is orthogonal to $\\Omega$. Prove that there exists a homothety with center on line $PQ$ that maps $\\Gamma_1$ to $\\Gamma_2$.",
+        "statement_ru": "Доброе утро, друзья! Только что закончилась IZhO, поэтому предлагаем вам решить эту интересную задачу! IZhO 2025, задача 5. Выпуклый шестиугольник $A_1C_2B_1B_2C_1A_2$ вписан в окружность $\\Omega$. Лучи $A_1B_1$ и $A_2B_2$ пересекаются в точке $P$, а отрезки $A_1C_1$ и $A_2C_2$ в точке $Q$. Окружность $\\Gamma_1$ проходит через точки $B_1$ и $C_1$ и ортогональна $\\Omega$. Аналогично, окружность $\\Gamma_2$ проходит через точки $B_2$ и $C_2$ и ортогональна $\\Omega$. Докажите, что существует гомотетия с центром на прямой $PQ$, переводящая $\\Gamma_1$ в $\\Gamma_2$.",
         "proposedBy": "IZhO",
         "source": "IZhO 2025, P5",
         "level": "advanced",
@@ -839,6 +943,7 @@
         "id": 83,
         "photo": "../geometry/photos/photo_85@21-01-2025_15-29-20.jpg",
         "statement": "Greetings, dear community! Last week Stage III of BelMA ended and the author collective of our channel congratulates the winners and prize-winners! 🎉🎉🎉 We hope that participants appreciated the quality of problems. We are starting to publish geometry problems! Interesting solutions and constructive criticism of problems are welcome!",
+        "statement_ru": "Приветствуем, дорогое сообщество! На прошлой неделе завершился III этап BelMA, и авторский коллектив нашего канала поздравляет победителей и призёров! 🎉🎉🎉 Надеемся, что участники оценили качество задач. Начинаем публиковать задачи по геометрии! Интересные решения и конструктивная критика задач приветствуются!",
         "proposedBy": "Matvei Zorka",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage III, Problem 8.4</a>",
         "level": "grade7-8",
@@ -848,6 +953,7 @@
         "id": 84,
         "photo": "../geometry/photos/photo_86@22-01-2025_15-29-38.jpg",
         "statement": "Greetings! Continuing our marathon of Stage III. This time grade 9 was offered not quite standard geometry. We invite you to get acquainted with it. Ma and Geo are playing a game. First, Ma chooses point $X$ inside circle $\\Omega$ of radius 1. After that, Geo names a number $\\alpha \\in (0,90]$. Then Ma draws two lines, the angle between which equals $\\alpha°$, and marks the intersection points $A$, $B$, $C$, and $D$ of these lines with circle $\\Omega$. Find the smallest possible value of $P$ for which Geo can make the inequality $XA^2 + XB^2 + XC^2 + XD^2 \\leq P$ hold regardless of Ma's actions.",
+        "statement_ru": "Приветствуем! Продолжаем наш марафон III этапа. На этот раз в 9 классе была предложена не совсем стандартная геометрия. Приглашаем вас с ней познакомиться. Ма и Гео играют в игру. Сначала Ма выбирает точку $X$ внутри окружности $\\Omega$ радиуса 1. После этого Гео называет число $\\alpha \\in (0,90]$. Затем Ма проводит две прямые, угол между которыми равен $\\alpha°$, и отмечает точки пересечения $A$, $B$, $C$ и $D$ этих прямых с окружностью $\\Omega$. Найдите наименьшее возможное значение $P$, при котором Гео может добиться выполнения неравенства $XA^2 + XB^2 + XC^2 + XD^2 \\leq P$ независимо от действий Ма.",
         "proposedBy": "Anton Palyukhovich",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage III, Problem 9.4</a>",
         "level": "grade9-10",
@@ -857,6 +963,7 @@
         "id": 85,
         "photo": "../geometry/photos/photo_87@23-01-2025_15-29-01.jpg",
         "statement": "Greetings! Marathon, III stage, you already know everything yourselves. Classic simple geometry at position 4.",
+        "statement_ru": "Приветствуем! Марафон, III этап, вы и сами уже всё знаете. Классическая простая геометрия под номером 4.",
         "proposedBy": "Alexey Vaydelevich",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage III, Problem 10.4</a>",
         "level": "grade9-10",
@@ -866,6 +973,7 @@
         "id": 86,
         "photo": "../geometry/photos/photo_88@24-01-2025_15-30-29.jpg",
         "statement": "AAA GREETINGS I FORGOT ABOUT THE POST AT 23:29",
+        "statement_ru": "ААА ПРИВЕТСТВУЮ Я ЗАБЫЛ ПРО ПОСТ В 23:29",
         "proposedBy": "Matvei Zorka",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage III, Problem 11.4</a>",
         "level": "grade11",
@@ -875,6 +983,7 @@
         "id": 87,
         "photo": "../geometry/photos/photo_89@25-01-2025_15-29-01.jpg",
         "statement": "Greetings, dear subscribers! Problems from position 4 are over, so I propose you to appreciate an interesting observation that will be suitable as light practice for beginning geometers. $A_1B = BC$, $AB_1 = AC$.",
+        "statement_ru": "Приветствую, дорогие подписчики! Задачи с 4-й позиции закончились, поэтому предлагаю вам оценить интересное наблюдение, которое подойдёт как лёгкая тренировка для начинающих геометров. $A_1B = BC$, $AB_1 = AC$.",
         "proposedBy": "Alexey Vaydelevich",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage III, Problem 9.6</a>",
         "level": "grade9-10",
@@ -884,6 +993,7 @@
         "id": 88,
         "photo": "../geometry/photos/photo_90@26-01-2025_15-29-01.jpg",
         "statement": "Greetings! And the last word about Stage III of BelMA will be this exercise.",
+        "statement_ru": "Приветствую! И последним словом о III этапе БелМО будет это упражнение.",
         "proposedBy": "Matvei Zorka",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage III, Problem 10.5</a>",
         "level": "grade9-10",
@@ -893,6 +1003,7 @@
         "id": 89,
         "photo": "../geometry/photos/photo_91@02-02-2025_09-22-17.jpg",
         "statement": "Greetings, dear community! While the heat reigns outside, in Bath it's about twenty. But the coming days there promise to be very hot🔥 Let's wish our Belarusian team at IMO, which is now preparing for tomorrow's tests, great problems and pleasant emotions with their wonderful guide. Good luck! PS. How did you get to the point of watching PG?",
+        "statement_ru": "Приветствую, дорогое сообщество! Пока на улице царит жара, в Бате около двадцати градусов. Но ближайшие дни там обещают быть очень жаркими🔥 Пожелаем нашей белорусской команде на IMO, которая сейчас готовится к завтрашнему туру, отличных задач и приятных эмоций вместе с их замечательным руководителем. Удачи! PS. Как вы дошли до того, что смотрите PG?",
         "proposedBy": "Unknown",
         "source": "Original problem",
         "level": "advanced",
@@ -902,6 +1013,7 @@
         "id": 90,
         "photo": "../geometry/photos/photo_102@28-03-2025_15-56-19.jpg",
         "statement": "Greetings, dear subscribers, it's time to hug the author of 11.3! Given a triangle, using a compass and straightedge, construct three circles of the same radius that touch each other and each vertex of the triangle lies on its own circle. Nobody solved this problem!",
+        "statement_ru": "Приветствую, дорогие подписчики, пора обнять автора задачи 11.3! Дан треугольник. С помощью циркуля и линейки постройте три окружности одинакового радиуса, которые касаются друг друга, причём каждая вершина треугольника лежит на своей окружности. Эту задачу никто не решил!",
         "proposedBy": "Matvei Zorka",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage IV, Problem 11.3</a>",
         "level": "grade11",
@@ -911,6 +1023,7 @@
         "id": 91,
         "photo": "../geometry/photos/photo_103@29-03-2025_14-40-07.jpg",
         "statement": "Greetings, dear community! Continuing to publish the Republican Olympiad. The problem stands exactly in its position, although for some reason a sufficient number of people could not solve it...",
+        "statement_ru": "Приветствую, дорогое сообщество! Продолжаем публиковать республиканскую олимпиаду. Задача стоит ровно на своей позиции, хотя почему-то достаточно много людей не смогли её решить...",
         "proposedBy": "Vadzim Kamianetski",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage IV, Problem 11.6</a>",
         "level": "grade11",
@@ -920,6 +1033,7 @@
         "id": 92,
         "photo": "../geometry/photos/photo_104@31-03-2025_08-30-50.jpg",
         "statement": "Greetings, dear community! I propose to rest from problems from the Republican and try to solve another masterpiece from Matvei Zorka!",
+        "statement_ru": "Приветствую, дорогое сообщество! Предлагаю отдохнуть от задач республиканской олимпиады и попробовать решить ещё один шедевр от Matvei Zorka!",
         "proposedBy": "Matvei Zorka",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">Olympiad 239, Problem 10-11.3</a>",
         "level": "grade9-10",
@@ -929,6 +1043,7 @@
         "id": 93,
         "photo": "../geometry/photos/photo_105@01-04-2025_04-05-36.jpg",
         "statement": "Greetings! We decided to no longer post geometry, but switch only to the second part of our name, namely 'movement'. Businessman Bora's city and village are 2 kilometers apart. One day businessman Bora left the city and went to his village at a speed of 4 km/h. At the same time, dog Bim ran out from the village, who rushes between Bora and the village: having run to Bora, he turns around and runs to the village, and having run to the village, turns around and runs to Bora; moreover, from the village to Bora, Bim runs at a speed of 12 km/h, from Bora to the village - at a speed of 8 km/h. How many kilometers will Bim run before Bora arrives at his village?",
+        "statement_ru": "Приветствую! Мы решили больше не публиковать геометрию, а перейти только ко второй части нашего названия, а именно к «движению». Город и деревня бизнесмена Боры находятся на расстоянии 2 километров друг от друга. Однажды бизнесмен Бора вышел из города и пошёл в свою деревню со скоростью 4 км/ч. В тот же момент из деревни выбежал пёс Бим, который носится между Борой и деревней: добежав до Боры, он разворачивается и бежит к деревне, а добежав до деревни, разворачивается и бежит к Боре; при этом от деревни к Боре Бим бежит со скоростью 12 км/ч, а от Боры к деревне со скоростью 8 км/ч. Сколько километров пробежит Бим, пока Бора не придёт в свою деревню?",
         "proposedBy": "Yauheniy Alexandrovich Barabanov",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage IV, Problem 8.2</a>",
         "level": "grade7-8",
@@ -938,6 +1053,7 @@
         "id": 94,
         "photo": "../geometry/photos/photo_106@02-04-2025_12-01-42.jpg",
         "statement": "Greetings, dear subscribers! Continuing to publish problems from BelMA. It was for this that Alexey Valentsiuk received a Geometric Movement t-shirt! Unfortunately, the problem turned out to be too easy for its position, Yauheni didn't like checking it :(",
+        "statement_ru": "Приветствую, дорогие подписчики! Продолжаем публиковать задачи БелМО. Именно за эту задачу Alexey Valentsiuk получил футболку «Геометрического движения»! К сожалению, задача оказалась слишком лёгкой для своей позиции, и Yauheni не понравилось её проверять :(",
         "proposedBy": "Matvei Zorka",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage IV, Problem 10.3</a>",
         "level": "grade9-10",
@@ -947,6 +1063,7 @@
         "id": 95,
         "photo": "../geometry/photos/photo_107@03-04-2025_12-05-55.jpg",
         "statement": "Greetings! In my opinion, a brilliant problem for its position.",
+        "statement_ru": "Приветствую! На мой взгляд, блестящая задача для своей позиции.",
         "proposedBy": "Alexey Vaydelevich",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage IV, Problem 10.5</a>",
         "level": "grade9-10",
@@ -956,6 +1073,7 @@
         "id": 96,
         "photo": "../geometry/photos/photo_108@04-04-2025_12-04-11.jpg",
         "statement": "Greetings, dear ones! Rarely can you see a problem about a 60-degree angle at the Belarusian Olympiad. And in this debut problem we see it!",
+        "statement_ru": "Приветствую, дорогие! На белорусской олимпиаде редко можно увидеть задачу про угол в 60 градусов. А в этой дебютной задаче мы его видим!",
         "proposedBy": "Ivan Korshunov",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage IV, Problem 9.7</a>",
         "level": "grade9-10",
@@ -965,6 +1083,7 @@
         "id": 97,
         "photo": "../geometry/photos/photo_109@05-04-2025_12-05-12.jpg",
         "statement": "Good evening to all subscribers! Continuing to publish problems!",
+        "statement_ru": "Добрый вечер всем подписчикам! Продолжаем публиковать задачи!",
         "proposedBy": "Vadzim Kamianetski",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage IV, Problem 9.1</a>",
         "level": "grade9-10",
@@ -974,6 +1093,7 @@
         "id": 98,
         "photo": "../geometry/photos/photo_110@06-04-2025_12-05-10.jpg",
         "statement": "Greetings! The red point is the center of the parallelogram.",
+        "statement_ru": "Приветствую! Красная точка является центром параллелограмма.",
         "proposedBy": "Matvei Zorka",
         "source": "<a href=\"https://belmath.org/archive/2025/\" target=\"_blank\" style=\"color: var(--primary-color); text-decoration: none;\">BelMO stage IV, Problem 8.8</a>",
         "level": "grade7-8",
@@ -983,6 +1103,7 @@
         "id": 99,
         "photo": "../geometry/photos/photo_111@12-04-2025_11-00-08.jpg",
         "statement": "Greetings! One Problem Contest begins! Good luck! Let point $I$ be the incenter of triangle $ABC$. Points $P$ and $Q$ are isogonally conjugate with respect to triangle $ABC$, and point $Q$ does not lie on the circumcircles of triangles $BPC$, $APC$, and $APB$. Also, the circumcenter $\\Gamma$ of triangle $PIQ$ lies on the circumcircle $\\Omega$ of triangle $ABC$. The line passing through the intersection points of $\\Gamma$ and $\\Omega$ intersects line $BC$ at point $X$. Prove that there exists a circle (possibly of zero radius) that touches lines $AP$, $AQ$, $XP$, and $XQ$.",
+        "statement_ru": "Приветствую! Начинается One Problem Contest! Удачи! Пусть точка $I$ является центром вписанной окружности треугольника $ABC$. Точки $P$ и $Q$ изогонально сопряжены относительно треугольника $ABC$, причём точка $Q$ не лежит на описанных окружностях треугольников $BPC$, $APC$ и $APB$. Кроме того, центр описанной окружности $\\Gamma$ треугольника $PIQ$ лежит на описанной окружности $\\Omega$ треугольника $ABC$. Прямая, проходящая через точки пересечения $\\Gamma$ и $\\Omega$, пересекает прямую $BC$ в точке $X$. Докажите, что существует окружность (возможно, нулевого радиуса), касающаяся прямых $AP$, $AQ$, $XP$ и $XQ$.",
         "proposedBy": "Matvei Zorka",
         "source": "One Problem Contest",
         "level": "advanced",
@@ -992,6 +1113,7 @@
         "id": 100,
         "photo": "../geometry/photos/photo_113@28-04-2025_01-10-14.jpg",
         "statement": "Greetings! Remember the Moscow Oral Geometry Olympiad? My problem waited for its time for two years and didn't wait :)",
+        "statement_ru": "Приветствую! Помните Московскую устную олимпиаду по геометрии? Моя задача ждала своего часа два года и не дождалась :)",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -1001,6 +1123,7 @@
         "id": 101,
         "photo": "../geometry/photos/photo_114@03-05-2025_10-38-41.jpg",
         "statement": "[Image-based problem]",
+        "statement_ru": "[Задача на изображении]",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -1010,6 +1133,7 @@
         "id": 102,
         "photo": "../geometry/photos/photo_115@12-05-2025_13-53-02.jpg",
         "statement": "[Image-based problem]",
+        "statement_ru": "[Задача на изображении]",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -1019,6 +1143,7 @@
         "id": 103,
         "photo": "../geometry/photos/photo_116@20-05-2025_03-39-38.jpg",
         "statement": "Last week Yauheni was checking geometry at the 7th grade olympiad. It so happened that one of the participants (Nika Maslyonchanka) without knowing it herself obtained such a strange statement that it is impossible for a seventh grader to solve. We invite you to test your strength and solve this problem! 255",
+        "statement_ru": "На прошлой неделе Yauheni проверял геометрию на олимпиаде 7 класса. Так получилось, что одна из участниц (Nika Maslyonchanka), сама того не зная, получила настолько странное утверждение, что семикласснику его не решить. Предлагаем вам испытать свои силы и решить эту задачу! 255",
         "proposedBy": "Nika Maslyonchanka (discovered)",
         "source": "Grade 7 Olympiad",
         "level": "advanced",
@@ -1028,6 +1153,7 @@
         "id": 104,
         "photo": "../geometry/photos/photo_117@23-05-2025_13-27-13.jpg",
         "statement": "This problem cost me a trip to IMC. Given two ellipses that have a common center and bound equal area $S$. Prove that there exists an ellipse that contains the common part of these ellipses and has area less than $S$.",
+        "statement_ru": "Эта задача стоила мне поездки на IMC. Даны два эллипса с общим центром, каждый из которых ограничивает фигуру площади $S$. Докажите, что существует эллипс, который содержит общую часть этих эллипсов и имеет площадь меньше $S$.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -1037,6 +1163,7 @@
         "id": 105,
         "photo": "../geometry/photos/photo_118@02-06-2025_14-30-35.jpg",
         "statement": "Greetings, dear community! Congratulations on the beginning of summer! We hope that during this summer you will learn a lot of new and interesting things. And we start it with this problem. Prove the intersection of three lines at one point.",
+        "statement_ru": "Приветствую, дорогое сообщество! Поздравляем с началом лета! Надеемся, что этим летом вы узнаете много нового и интересного. А начинаем мы его с этой задачи. Докажите, что три прямые пересекаются в одной точке.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "grade9-10",
@@ -1046,6 +1173,7 @@
         "id": 106,
         "photo": "../geometry/photos/photo_119@09-06-2025_04-30-42.jpg",
         "statement": "Greetings, dear community! Our solutions with Zhenya are completely different from each other. Can you find both of them?",
+        "statement_ru": "Приветствую, дорогое сообщество! Наши с Женей решения совершенно не похожи друг на друга. Сможете найти оба?",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -1055,6 +1183,7 @@
         "id": 107,
         "photo": "../geometry/photos/photo_120@15-06-2025_09-43-27.jpg",
         "statement": "Greetings!",
+        "statement_ru": "Приветствую!",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -1064,6 +1193,7 @@
         "id": 108,
         "photo": "../geometry/photos/photo_121@21-06-2025_12-31-59.jpg",
         "statement": "Greetings, dear community! While our team is actively preparing for IMO, Zhenya is preparing for the session, I am preparing for August courses of Dobramat, and in triangle $ABC$ it turned out that two circles touch. Invented by Yauheni, who doesn't want to prepare for the session.",
+        "statement_ru": "Приветствую, дорогое сообщество! Пока наша команда активно готовится к IMO, Женя готовится к сессии, я готовлюсь к августовским курсам Dobramat, а в треугольнике $ABC$ оказалось, что две окружности касаются. Придумал Yauheni, который не хочет готовиться к сессии.",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -1073,6 +1203,7 @@
         "id": 109,
         "photo": "../geometry/photos/photo_122@02-07-2025_07-04-00.jpg",
         "statement": "Through the bases of three cevians intersecting at one point, lines parallel to these cevians were drawn. Prove that the three dashed lines intersect at one point.",
+        "statement_ru": "Через основания трёх чевиан, пересекающихся в одной точке, провели прямые, параллельные этим чевианам. Докажите, что три пунктирные прямые пересекаются в одной точке.",
         "proposedBy": "Denis Vistunov",
         "source": "Wonderful Geometry Olympiad, Junior Group, Problem 3",
         "level": "grade9-10",
@@ -1082,6 +1213,7 @@
         "id": 110,
         "photo": "../geometry/photos/photo_124@15-07-2025_00-16-34.jpg",
         "statement": "<strong>IMO 2025 P2</strong>. Let $\\Omega$ and $\\Gamma$ be circles with centers $M$ and $N$ respectively, such that the radius of $\\Omega$ is less than the radius of $\\Gamma$. Suppose circles $\\Omega$ and $\\Gamma$ intersect at two distinct points $A$ and $B$. Line $MN$ intersects $\\Omega$ at point $C$ and $\\Gamma$ at point $D$, so that points $C$, $M$, $N$, and $D$ lie on this line in the indicated order. Let $P$ be the circumcenter of triangle $ACD$. Line $AP$ intersects $\\Omega$ again at point $E$. Line $AP$ intersects $\\Gamma$ again at point $F$. Let $H$ be the orthocenter of triangle $PMN$. Prove that the line passing through $H$ and parallel to $AP$ is tangent to the circumcircle of triangle $BEF$.",
+        "statement_ru": "<strong>IMO 2025 P2</strong>. Даны окружности $\\Omega$ и $\\Gamma$ с центрами $M$ и $N$ соответственно, причём радиус $\\Omega$ меньше радиуса $\\Gamma$. Окружности $\\Omega$ и $\\Gamma$ пересекаются в двух различных точках $A$ и $B$. Прямая $MN$ пересекает $\\Omega$ в точке $C$, а $\\Gamma$ в точке $D$, так что точки $C$, $M$, $N$ и $D$ лежат на этой прямой в указанном порядке. Обозначим через $P$ центр описанной окружности треугольника $ACD$. Прямая $AP$ вторично пересекает $\\Omega$ в точке $E$. Прямая $AP$ вторично пересекает $\\Gamma$ в точке $F$. Обозначим через $H$ ортоцентр треугольника $PMN$. Докажите, что прямая, проходящая через $H$ параллельно $AP$, касается описанной окружности треугольника $BEF$.",
         "proposedBy": "IMO",
         "source": "IMO 2025, P2",
         "level": "advanced",
@@ -1091,6 +1223,7 @@
         "id": 111,
         "photo": "../geometry/photos/photo_125@26-07-2025_10-39-16.jpg",
         "statement": "Greetings, dear community! How are your summer affairs? We offer you such an exercise for sober mind. (Zhenya didn't solve)",
+        "statement_ru": "Приветствую, дорогое сообщество! Как ваши летние дела? Предлагаем вам такое упражнение для трезвого ума. (Женя не решил)",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -1100,6 +1233,7 @@
         "id": 112,
         "photo": "../geometry/photos/photo_126@02-08-2025_13-01-01.jpg",
         "statement": "Greetings! The International Mathematical Olympiad among students has just ended! We congratulate Belarusians and natives of Belarus! And also RMM TST P4 from the incredible Matvei Zorka!",
+        "statement_ru": "Приветствую! Только что завершилась Международная математическая олимпиада для студентов! Поздравляем белорусов и выходцев из Беларуси! А также RMM TST P4 от невероятного Matvei Zorka!",
         "proposedBy": "Matvei Zorka",
         "source": "RMM TST P4",
         "level": "advanced",
@@ -1107,7 +1241,7 @@
       },
       {
         "id": 113,
-        "photo": "../geometry/photos/photo_127@06-08-2025_16-25-41.jpg",
+        "photo": "../img/team/photo_127@06-08-2025_16-25-41.jpg",
         "statement": "And here are our heroes! Also many thanks to Anna Zadarazhniuk and Sergey Chernov for the 35 points won for the team! (And Jakub Byszewski for the 29 points won for the team with Belarusians)",
         "proposedBy": "Team photo",
         "source": "IMC team photo",
@@ -1118,6 +1252,7 @@
         "id": 114,
         "photo": "../geometry/photos/photo_128@09-08-2025_14-24-46.jpg",
         "statement": "Greetings! Evening post without fanaticism",
+        "statement_ru": "Приветствую! Вечерний пост без фанатизма",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -1127,6 +1262,7 @@
         "id": 115,
         "photo": "../geometry/photos/photo_129@20-08-2025_11-16-57.jpg",
         "statement": "Greetings!",
+        "statement_ru": "Приветствую!",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -1136,6 +1272,7 @@
         "id": 116,
         "photo": "../geometry/photos/photo_130@20-08-2025_11-22-57.jpg",
         "statement": "b)",
+        "statement_ru": "б)",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -1145,6 +1282,7 @@
         "id": 117,
         "photo": "../geometry/photos/photo_132@03-09-2025_12-45-55.jpg",
         "statement": "Greetings, dear community! You love contests, right? And now Dabromat is holding a beauty contest of problems, in which you can participate and get merch, a discount on courses and total respect! It ends today, so hurry up to participate! And here's an example of a beautiful problem!",
+        "statement_ru": "Приветствую, дорогое сообщество! Вы ведь любите конкурсы? Сейчас Dabromat проводит конкурс красоты задач, в котором можно поучаствовать и получить мерч, скидку на курсы и всеобщее уважение! Он заканчивается сегодня, так что спешите принять участие! А вот пример красивой задачи!",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Dabromat Beauty Contest",
         "level": "grade9-10",
@@ -1154,6 +1292,7 @@
         "id": 118,
         "photo": "../geometry/photos/photo_133@16-09-2025_15-08-33.jpg",
         "statement": "Greetings dear community! You may wonder: why haven't there been posts for a long time? September 4, Hollow Knight: Silksong was released. And now, after 60 hours of gameplay, when all endings and most achievements are obtained, we can continue to publish problems in a stable mode :) And today we have geometry that I came up with about six months ago. Unfortunately, it is solved too easily in complex coordinates, but it has a beautiful geometric solution, which, in my opinion, is difficult to find. So we invite you to do it!",
+        "statement_ru": "Приветствую, дорогое сообщество! Вы, возможно, задаётесь вопросом: почему так долго не было постов? 4 сентября вышла Hollow Knight: Silksong. И теперь, после 60 часов игры, когда получены все концовки и большинство достижений, мы можем продолжить публиковать задачи в стабильном режиме :) А сегодня у нас геометрия, которую я придумал около полугода назад. К сожалению, она слишком легко решается в комплексных координатах, но у неё есть красивое геометрическое решение, которое, на мой взгляд, трудно найти. Предлагаем вам это сделать!",
         "proposedBy": "Yauheni Sheshukou",
         "source": "Original problem",
         "level": "advanced",
@@ -1163,6 +1302,7 @@
         "id": 119,
         "photo": "../geometry/video_files/poncelet_altitude.gif",
         "statement": "Greetings, dear community! Not so long ago the tasks of the Republican Tournament of Young Mathematicians appeared and on this occasion we want to share with you an interesting problem from there. (We are publishing only its small part) Prove that if the altitudes of a $(2k+1)$-gon of Poncelet intersect at one point, then they intersect at it during the rotation of Poncelet. We invite all Belarusian schoolchildren to participate in the tournament. And we also ask our subscribers not to share their solutions until the tournament ends.",
+        "statement_ru": "Приветствую, дорогое сообщество! Не так давно появились задачи Республиканского турнира юных математиков, и по этому поводу мы хотим поделиться с вами интересной задачей оттуда. (Публикуем только её небольшую часть) Докажите, что если высоты $(2k+1)$-угольника Понселе пересекаются в одной точке, то они пересекаются в ней и при повороте Понселе. Приглашаем всех белорусских школьников принять участие в турнире. А также просим наших подписчиков не делиться своими решениями до окончания турнира.",
         "proposedBy": "Yauheni",
         "source": "Republican Tournament of Young Mathematicians",
         "level": "advanced",
@@ -1172,6 +1312,7 @@
         "id": 120,
         "photo": "../geometry/photos/photo_134@17-10-2025_12-26-51.jpg",
         "statement": "Greetings! Not so long ago the school olympiad passed, so we share with you an interesting problem in the last position of grade 8. Everyone should manage, try!",
+        "statement_ru": "Приветствую! Недавно прошла школьная олимпиада, поэтому делимся с вами интересной задачей с последней позиции 8 класса. Справиться должен каждый, попробуйте!",
         "proposedBy": "Yauheni",
         "source": "School Olympiad, Grade 8",
         "level": "grade7-8",
@@ -1181,6 +1322,7 @@
         "id": 121,
         "photo": "../geometry/photos/photo_135@03-12-2025_13-31-07.jpg",
         "statement": "And a year hasn't passed!",
+        "statement_ru": "И года не прошло!",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -1190,6 +1332,7 @@
         "id": 122,
         "photo": "../geometry/photos/photo_136@14-12-2025_07-19-58.jpg",
         "statement": "Greetings! Problem from the intergalactic multi-profile olympiad. Trapezoid.",
+        "statement_ru": "Приветствую! Задача с межгалактической многопрофильной олимпиады. Трапеция.",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Multi-profile Olympiad",
         "level": "grade9-10",
@@ -1208,6 +1351,7 @@
         "id": 124,
         "photo": "../geometry/photos/photo_138@26-01-2026_05-58-28.jpg",
         "statement": "Greetings, dear community! Two weeks ago Stage III of BelMA ended and the author collective of our channel congratulates the winners and prize-winners! 🎉🎉🎉 We hope that participants appreciated the quality of problems and all those who wished had the chance to see the beauty of conditions and solutions to them. 💅💅💅 Today we begin to publish geometry problems! Interesting solutions and constructive criticism of problems are welcome!",
+        "statement_ru": "Приветствую, дорогое сообщество! Две недели назад завершился III этап БелМО, и авторский коллектив нашего канала поздравляет победителей и призёров! 🎉🎉🎉 Надеемся, что участники оценили качество задач, и все желающие смогли увидеть красоту их условий и решений. 💅💅💅 Сегодня мы начинаем публиковать задачи по геометрии! Интересные решения и конструктивная критика задач приветствуются!",
         "proposedBy": "Yauheni Sheshukou",
         "source": "BelMO stage III, Problem 8.4",
         "level": "grade7-8",
@@ -1217,6 +1361,7 @@
         "id": 125,
         "photo": "../geometry/photos/photo_139@27-01-2026_10-14-40.jpg",
         "statement": "Greetings, dear community! Using complex coordinates is prohibited!",
+        "statement_ru": "Приветствую, дорогое сообщество! Использовать комплексные координаты запрещено!",
         "proposedBy": "Matvei Zorka",
         "source": "BelMO stage III, Problem 9.4",
         "level": "grade9-10",
@@ -1226,6 +1371,7 @@
         "id": 126,
         "photo": "../geometry/photos/photo_140@30-01-2026_08-02-53.jpg",
         "statement": "Greetings, dear community!",
+        "statement_ru": "Приветствую, дорогое сообщество!",
         "proposedBy": "Yauheni Sheshukou",
         "source": "BelMO stage III, Problem 9.6",
         "level": "grade9-10",
@@ -1235,6 +1381,7 @@
         "id": 127,
         "photo": "../geometry/photos/photo_141@31-01-2026_03-14-02.jpg",
         "statement": "Greetings, dear community!",
+        "statement_ru": "Приветствую, дорогое сообщество!",
         "proposedBy": "Matvei Zorka",
         "source": "BelMO stage III, Problem 10.7",
         "level": "grade9-10",
@@ -1244,6 +1391,7 @@
         "id": 128,
         "photo": "../geometry/photos/photo_142@01-02-2026_05-37-29.jpg",
         "statement": "Greetings, dear community! Angle $C$ is smaller than all in triangle $ABC$. Prove the equality.",
+        "statement_ru": "Приветствую, дорогое сообщество! Угол $C$ наименьший среди углов треугольника $ABC$. Докажите равенство.",
         "proposedBy": "Igor Ivanovich Varanovich",
         "source": "BelMO stage III, Problem 10.1",
         "level": "grade9-10",
@@ -1253,6 +1401,7 @@
         "id": 129,
         "photo": "../geometry/photos/One_Problem_Contest.jpeg",
         "statement": "Let $I$ be the incenter of triangle $ABC$. Points $P$ and $Q$ are isogonal conjugates in triangle $ABC$, and $Q$ does not lie on the circumcircles of triangles $BPC$, $APC$, and $APB$. It is known that the center of the circumcircle $\\Gamma$ of triangle $PIQ$ lies on the circumcircle $\\Omega$ of triangle $ABC$. The line through the intersection points of $\\Gamma$ and $\\Omega$ intersects $BC$ at $X$. Prove that there exists a circle (possibly with zero radius) tangent to $AP$, $AQ$, $XP$, and $XQ$.",
+        "statement_ru": "Обозначим через $I$ центр вписанной окружности треугольника $ABC$. Точки $P$ и $Q$ изогонально сопряжены в треугольнике $ABC$, причём $Q$ не лежит на описанных окружностях треугольников $BPC$, $APC$ и $APB$. Известно, что центр описанной окружности $\\Gamma$ треугольника $PIQ$ лежит на описанной окружности $\\Omega$ треугольника $ABC$. Прямая, проходящая через точки пересечения $\\Gamma$ и $\\Omega$, пересекает $BC$ в точке $X$. Докажите, что существует окружность (возможно, нулевого радиуса), касающаяся $AP$, $AQ$, $XP$ и $XQ$.",
         "proposedBy": "Matvei Zorka",
         "source": "One Problem Contest",
         "level": "advanced",
@@ -1262,6 +1411,7 @@
         "id": 130,
         "photo": "../geometry/video_files/2025_11_04_165251.gif",
         "statement": "Welcome, dear community! 🚴‍♀️",
+        "statement_ru": "Приветствуем, дорогое сообщество! 🚴‍♀️",
         "proposedBy": "Vadzim Kamianetski",
         "source": "Original problem",
         "level": "grade9-10",
@@ -1269,13 +1419,22 @@
       },
     ];
 
+    // Translation helper from ../i18n.js (returns English unchanged)
+    const I18N = window.BelMathI18n || { lang: 'en', t: s => s };
+    const tr = s => I18N.t(s);
+    const isRu = I18N.lang === 'ru';
+    const statementOf = p => (isRu && p.statement_ru) ? p.statement_ru : p.statement;
+    // Translate the text of a source, keeping a link around it if there is one
+    const sourceOf = s => s.indexOf('<') === -1 ? tr(s) : s.replace(/>([^<]+)</g, (m, x) => '>' + tr(x) + '<');
+
     // Format level for display
     function formatLevel(level) {
-      return level
-        .replace('grade7-8', 'Grade 7-8')
-        .replace('grade9-10', 'Grade 9-10')
-        .replace('grade11', 'Grade 11')
-        .replace('advanced', 'Advanced');
+      const labels = { 'grade7-8': 'Grade 7-8', 'grade9-10': 'Grade 9-10', 'grade11': 'Grade 11', 'advanced': 'Advanced' };
+      return tr(labels[level] || level);
+    }
+
+    function formatTopic(topic) {
+      return tr(topic.charAt(0).toUpperCase() + topic.slice(1));
     }
 
     // Global variables for pagination
@@ -1289,19 +1448,19 @@
       problemCard.style.cssText = 'background: var(--bg-color); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); display: flex; flex-direction: column;';
       
       let content = `
-        <h3 style="font-size: 16px; margin-bottom: 8px; color: var(--text-primary);">Problem #${problem.id}</h3>
-        <p style="color: var(--text-secondary); margin-bottom: 8px; font-size: 12px;">${problem.topic.charAt(0).toUpperCase() + problem.topic.slice(1)} • ${formatLevel(problem.level)}</p>
+        <h3 style="font-size: 16px; margin-bottom: 8px; color: var(--text-primary);">${tr('Problem #' + problem.id)}</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 8px; font-size: 12px;">${formatTopic(problem.topic)} • ${formatLevel(problem.level)}</p>
       `;
       
       if (problem.photo) {
-        content += `<img src="${problem.photo}" alt="Problem ${problem.id}" style="width: 100%; height: auto; border-radius: 6px; margin-bottom: 8px; max-height: 400px; object-fit: contain; background: white;">`;
+        content += `<img src="${problem.photo}" alt="${tr('Problem ' + problem.id)}" style="width: 100%; height: auto; border-radius: 6px; margin-bottom: 8px; max-height: 400px; object-fit: contain; background: white;">`;
       }
       
       content += `
-        <div style="color: var(--text-primary); margin-bottom: 10px; line-height: 1.5; font-size: 14px; flex-grow: 1;">${problem.statement}</div>
+        <div style="color: var(--text-primary); margin-bottom: 10px; line-height: 1.5; font-size: 14px; flex-grow: 1;">${statementOf(problem)}</div>
         <div style="margin-top: auto;">
-          ${problem.proposedBy && problem.proposedBy !== 'Unknown' ? `<p style="color: var(--text-muted); font-size: 11px; margin-bottom: 2px;"><strong>Proposed by:</strong> ${problem.proposedBy}</p>` : ''}
-          ${problem.source && problem.source !== 'Original problem' ? `<p style="color: var(--text-muted); font-size: 11px;"><strong>Source:</strong> ${problem.source}</p>` : ''}
+          ${problem.proposedBy && problem.proposedBy !== 'Unknown' ? `<p style="color: var(--text-muted); font-size: 11px; margin-bottom: 2px;"><strong>${tr('Proposed by:')}</strong> ${tr(problem.proposedBy)}</p>` : ''}
+          ${problem.source && problem.source !== 'Original problem' ? `<p style="color: var(--text-muted); font-size: 11px;"><strong>${tr('Source:')}</strong> ${sourceOf(problem.source)}</p>` : ''}
         </div>
       `;
       
@@ -1377,9 +1536,9 @@
           return false;
         }
         
-        const matchesSearch = problem.statement.toLowerCase().includes(searchTerm) || 
-                            problem.proposedBy.toLowerCase().includes(searchTerm) ||
-                            problem.source.toLowerCase().includes(searchTerm);
+        const matchesSearch = statementOf(problem).toLowerCase().includes(searchTerm) || 
+                            tr(problem.proposedBy).toLowerCase().includes(searchTerm) ||
+                            sourceOf(problem.source).toLowerCase().includes(searchTerm);
         const matchesTopic = topicFilter === 'all' || problem.topic === topicFilter;
         const matchesLevel = levelFilter === 'all' || problem.level === levelFilter;
         

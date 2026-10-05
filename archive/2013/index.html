@@ -3,6 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      var lang = null;
+      try {
+        var q = new URLSearchParams(location.search).get('lang');
+        if (q === 'en' || q === 'ru') { localStorage.setItem('lang', q); }
+        lang = localStorage.getItem('lang');
+      } catch (e) {}
+      if (lang !== 'en' && lang !== 'ru') {
+        var first = ((navigator.languages && navigator.languages[0]) || navigator.language || 'en').toLowerCase();
+        lang = (first.indexOf('ru') === 0 || first.indexOf('be') === 0) ? 'ru' : 'en';
+      }
+      document.documentElement.lang = lang;
+      if (lang === 'ru') {
+        var h = document.documentElement;
+        h.className += ' i18n-pending';
+        setTimeout(function () { h.className = h.className.replace(' i18n-pending', ''); }, 1500);
+      }
+    })();
+  </script>
   <title>2013 Archive — BelMath</title>
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
@@ -26,12 +46,15 @@
         <nav>
           <ul class="nav-links">
             <li><a href="../../">Home</a></li>
-            <li><a href="../../tracks/">Training Tracks</a></li>
-            <li><a href="../../contests/">Contests</a></li>
             <li><a href="../">Archive</a></li>
           </ul>
         </nav>
-        <div class="mobile-nav" id="mobile-nav-toggle">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-set-lang="en">EN</button>
+          <span aria-hidden="true">|</span>
+          <button type="button" data-set-lang="ru">RU</button>
+        </div>
+        <div class="mobile-nav" id="mobile-nav-toggle" role="button" tabindex="0" aria-label="Open menu">
           <i class="fas fa-bars"></i>
         </div>
       </div>
@@ -40,15 +63,18 @@
 
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobile-menu">
-    <button class="mobile-menu-close" id="mobile-menu-close">
+    <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">
       <i class="fas fa-times"></i>
     </button>
     <ul class="mobile-menu-links">
       <li><a href="../../">Home</a></li>
-      <li><a href="../../tracks/">Training Tracks</a></li>
-      <li><a href="../../contests/">Contests</a></li>
       <li><a href="../">Archive</a></li>
     </ul>
+    <div class="lang-switch lang-switch-mobile" role="group" aria-label="Language">
+      <button type="button" data-set-lang="en">EN</button>
+      <span aria-hidden="true">|</span>
+      <button type="button" data-set-lang="ru">RU</button>
+    </div>
   </div>
 
   <section class="section" style="padding-top: 40px;">
@@ -89,6 +115,7 @@ View PDF
       </div>
     </div>
   </footer>
+  <script src="../../i18n.js"></script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HE93GE7BH5"></script>
   <script src="../../ga.js"></script>

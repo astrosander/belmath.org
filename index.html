@@ -3,8 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      var lang = null;
+      try {
+        var q = new URLSearchParams(location.search).get('lang');
+        if (q === 'en' || q === 'ru') { localStorage.setItem('lang', q); }
+        lang = localStorage.getItem('lang');
+      } catch (e) {}
+      if (lang !== 'en' && lang !== 'ru') {
+        var first = ((navigator.languages && navigator.languages[0]) || navigator.language || 'en').toLowerCase();
+        lang = (first.indexOf('ru') === 0 || first.indexOf('be') === 0) ? 'ru' : 'en';
+      }
+      document.documentElement.lang = lang;
+      if (lang === 'ru') {
+        var h = document.documentElement;
+        h.className += ' i18n-pending';
+        setTimeout(function () { h.className = h.className.replace(' i18n-pending', ''); }, 1500);
+      }
+    })();
+  </script>
   <title>BelMath — Belarus Olympiad Mathematics</title>
-  <meta name="description" content="Structured training programs, competitive contests, and verified archives, designed for students without access to elite coaching. Making olympiad mathematics in Belarus fair and accessible.">
+  <meta name="description" content="Archive of the Belarusian Mathematical Olympiad: problems of the Republican Olympiad since 1995 and national team selection tests.">
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:image" content="img/logo.png">
@@ -12,14 +32,12 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="img/logo.png">
   <link rel="icon" type="image/svg+xml" href="img/logo.svg">
-  <link rel="icon" type="image/x-icon" href="img/logo.ico">
+  <link rel="icon" type="image/x-icon" href="img/main_logo.ico">
   <link rel="apple-touch-icon" href="img/logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <!-- MathJax for LaTeX rendering -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script>
     window.MathJax = {
       tex: {
@@ -33,6 +51,7 @@
       }
     };
   </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     .no-pdf-icon::before {
       display: none !important;
@@ -51,11 +70,14 @@
         <nav>
           <ul class="nav-links">
             <li><a href="./" class="active">Home</a></li>
-            <li><a href="tracks/">Training Tracks</a></li>
-            <li><a href="contests/">Contests</a></li>
             <li><a href="archive/">Archive</a></li>
           </ul>
         </nav>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-set-lang="en">EN</button>
+          <span aria-hidden="true">|</span>
+          <button type="button" data-set-lang="ru">RU</button>
+        </div>
         <!-- BelSO Section -->
         <div class="belso-section">
           <a href="https://belso.org/" target="_blank" rel="noopener noreferrer" class="belso-link">
@@ -63,7 +85,7 @@
             <img src="https://belso.org/img/logo.svg" alt="BelSO" class="belso-logo">
           </a>
         </div>
-        <div class="mobile-nav" id="mobile-nav-toggle">
+        <div class="mobile-nav" id="mobile-nav-toggle" role="button" tabindex="0" aria-label="Open menu">
           <i class="fas fa-bars"></i>
         </div>
       </div>
@@ -72,15 +94,18 @@
 
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobile-menu">
-    <button class="mobile-menu-close" id="mobile-menu-close">
+    <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">
       <i class="fas fa-times"></i>
     </button>
     <ul class="mobile-menu-links">
       <li><a href="./" class="active">Home</a></li>
-      <li><a href="tracks/">Training Tracks</a></li>
-      <li><a href="contests/">Contests</a></li>
       <li><a href="archive/">Archive</a></li>
     </ul>
+    <div class="lang-switch lang-switch-mobile" role="group" aria-label="Language">
+      <button type="button" data-set-lang="en">EN</button>
+      <span aria-hidden="true">|</span>
+      <button type="button" data-set-lang="ru">RU</button>
+    </div>
   </div>
 
   <!-- Hero Section -->
@@ -92,16 +117,16 @@
         </div>
         <div class="hero-text-container">
       <h1>BelMath — Belarus Mathematics Olympiad</h1>
-      <p>Training programs, competitive contests, and verified archives, designed for students without access to elite coaching.</p>
+      <p>Problems of the Belarusian Mathematical Olympiad since 1995 and national team selection tests, collected in one archive.</p>
       
       <div class="hero-actions">
-        <a href="tracks/" class="btn btn-primary">
-          <img src="img/icons/Map_path.svg" alt="Route" style="width: 24px; height: 24px; object-fit: contain; display: inline-block; vertical-align: middle; filter: brightness(0) invert(1);">
-          Begin Training Track
+        <a href="archive/" class="btn btn-primary">
+          <img src="img/icons/Map_path.svg" alt="" style="width: 24px; height: 24px; object-fit: contain; display: inline-block; vertical-align: middle; filter: brightness(0) invert(1);">
+          Browse the Archive
         </a>
-        <a href="contests/" class="btn btn-secondary">
-          <img src="img/icons/Trophy-cup.svg" alt="Trophy" style="width: 24px; height: 24px; object-fit: contain; display: inline-block; vertical-align: middle;">
-          Contests and Results
+        <a href="archive/2025/" class="btn btn-secondary">
+          <img src="img/icons/Trophy-cup.svg" alt="" style="width: 24px; height: 24px; object-fit: contain; display: inline-block; vertical-align: middle;">
+          Team Selection 2025
         </a>
           </div>
         </div>
@@ -116,74 +141,19 @@
         <div style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: rgba(255, 255, 255, 0.05); border-radius: 50%; transform: translate(30%, -30%);"></div>
         <div style="position: absolute; bottom: 0; left: 0; width: 100px; height: 100px; background: rgba(255, 255, 255, 0.03); border-radius: 50%; transform: translate(-30%, 30%);"></div>
         
-        <div style="position: relative; z-index: 1; display: flex; align-items: center; gap: 12px;">
-          <img src="img/icons/IMO_logo.svg" alt="Belarus Math Team Selection IMO 2025" style="height: 40px; width: auto; object-fit: contain; flex-shrink: 0;">
-          <img src="img/icons/Trophy_Flat_Icon_GIF_Animation.gif" alt="Trophy" style="width: 48px; height: 48px; object-fit: contain; flex-shrink: 0;">
+        <div class="selection-banner" style="position: relative; z-index: 1; display: flex; align-items: center; gap: 12px;">
+          <img src="img/icons/IMO_logo.svg" alt="IMO" style="height: 40px; width: auto; object-fit: contain; flex-shrink: 0;">
+          <img src="img/icons/Trophy_Flat_Icon_GIF_Animation.gif" alt="" style="width: 48px; height: 48px; object-fit: contain; flex-shrink: 0;">
           <div style="flex: 1; min-width: 0;">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
               <h2 style="font-size: 20px; font-weight: 700; margin: 0; color: white; letter-spacing: -0.02em;">Belarus Math Team Selection</h2>
             </div>
             <p style="color: rgba(255, 255, 255, 0.85); font-size: 12px; margin: 0; line-height: 1.4;">
-              RMM 2025 • 20 problems • 5 days
+              RMM 2025 and IMO 2025 selection tests • 24 problems
             </p>
           </div>
           <a href="archive/2025/" class="btn-track no-pdf-icon" style="background: white; color: #0f172a; border: none; font-weight: 600; padding: 10px 20px; font-size: 14px; white-space: nowrap; flex-shrink: 0; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);" onmouseover="this.style.background='#f8fafc'; this.style.color='#0f172a'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)'" onmouseout="this.style.background='white'; this.style.color='#0f172a'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'">
             View
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Training Tracks Section -->
-  <section class="section" style="background: var(--bg-color);">
-    <div class="container">
-      <h2 class="section-title">Training Tracks</h2>
-      <p class="section-subtitle">Structured learning paths designed for students at every level of mathematical competition</p>
-      
-      <div class="tracks-grid">
-        <div class="track-card">
-          <div>
-            <div class="track-icon">
-              <img src="img/icons/stacked_layers.svg" alt="Layers" style="width: 56px; height: 56px; object-fit: contain;">
-            </div>
-            <h3 class="track-title">Foundations</h3>
-          </div>
-          <p class="track-description">
-            Master the fundamentals of algebra and combinatorics. This track covers essential problem-solving techniques, number theory basics, and geometric reasoning. Perfect for beginners or students preparing for their first regional stage.
-          </p>
-          <a href="tracks/foundations/" class="btn-track">
-            Begin Training
-          </a>
-        </div>
-        
-        <div class="track-card">
-          <div>
-            <div class="track-icon">
-              <img src="img/icons/map_with_location_pin.svg" alt="Map" style="width: 56px; height: 56px; object-fit: contain;">
-            </div>
-            <h3 class="track-title">Regional Stage Prep</h3>
-          </div>
-          <p class="track-description">
-            Comprehensive preparation for regional mathematics olympiads. Includes advanced algebra, geometry, number theory, and combinatorics problems with step-by-step solutions. Designed to bridge the gap between school curriculum and olympiad level.
-          </p>
-          <a href="tracks/regional/" class="btn-track">
-            Begin Training
-          </a>
-        </div>
-        
-        <div class="track-card">
-          <div>
-            <div class="track-icon">
-              <img src="img/icons/checkered_flag.svg" alt="Flag" style="width: 56px; height: 56px; object-fit: contain;">
-            </div>
-            <h3 class="track-title">National Stage Prep</h3>
-          </div>
-          <p class="track-description">
-            Advanced training for the national mathematics olympiad. Features challenging problems from past years, proof techniques, and strategic problem-solving approaches. For students aiming to compete at the highest level.
-          </p>
-          <a href="tracks/national/" class="btn-track">
-            Begin Training
           </a>
         </div>
       </div>
@@ -196,60 +166,23 @@
       <div class="potw-container">
         <div class="potw-header">
           <div style="display: flex; align-items: center; gap: 16px;">
-            <img src="img/icons/TrefoilKnot3D_600.svg" alt="Trefoil Knot" style="width: 64px; height: 64px; object-fit: contain; flex-shrink: 0;">
+            <img src="img/icons/TrefoilKnot3D_600.svg" alt="" style="width: 64px; height: 64px; object-fit: contain; flex-shrink: 0;">
             <div>
               <h2 class="potw-title">Problem of the Week</h2>
               <p style="color: var(--text-secondary); margin-top: 8px;">Weekly challenge problems to enhance your problem-solving skills</p>
             </div>
           </div>
-          <span class="potw-badge">Week 42</span>
         </div>
         
         <div class="potw-content">
           <div class="potw-problem">
+            <div data-i18n-html="potw">
             <strong>Problem:</strong> For positive integer $$m=2^k\cdot t,$$ where $k$ is a non-negative integer, $t$ is an odd integer, and let $$f(m)=t^{1-k}.$$ Prove that for any positive integer $n$ and for any positive odd number $a\le n$, $$\prod_{m=1}^n f(m)$$ is a multiple of $a$.
+            </div>
             <div style="margin-top: 12px; font-style: italic; color: var(--text-secondary); font-size: 14px;">
               — Dzianis Vistunou — IMO 2025
             </div>
           </div>
-          
-          <div class="potw-submit">
-            <input type="text" class="potw-input" placeholder="Enter your answer or solution approach..." id="potw-answer">
-            <button class="btn btn-primary" onclick="submitPotw()">
-              <img src="img/icons/paper_plane.svg" alt="Submit" style="width: 20px; height: 20px; object-fit: contain; display: inline-block; vertical-align: middle; filter: brightness(0) invert(1);">
-              Submit
-            </button>
-          </div>
-        </div>
-        
-        <div class="leaderboard">
-          <h3 class="leaderboard-title">This Week's Leaderboard</h3>
-          <ul class="leaderboard-list">
-            <li class="leaderboard-item">
-              <div class="leaderboard-rank">1</div>
-              <div class="leaderboard-name">Alex M.</div>
-              <div class="leaderboard-score">
-                <img src="img/icons/Checkmark-circle.svg" alt="Solved" style="width: 20px; height: 20px; object-fit: contain; display: inline-block; vertical-align: middle; filter: brightness(0) saturate(100%) invert(25%) sepia(95%) saturate(2000%) hue-rotate(145deg) brightness(95%) contrast(90%);">
-                Solved
-              </div>
-            </li>
-            <li class="leaderboard-item">
-              <div class="leaderboard-rank">2</div>
-              <div class="leaderboard-name">Maria K.</div>
-              <div class="leaderboard-score">
-                <img src="img/icons/Checkmark-circle.svg" alt="Solved" style="width: 20px; height: 20px; object-fit: contain; display: inline-block; vertical-align: middle; filter: brightness(0) saturate(100%) invert(25%) sepia(95%) saturate(2000%) hue-rotate(145deg) brightness(95%) contrast(90%);">
-                Solved
-              </div>
-            </li>
-            <li class="leaderboard-item">
-              <div class="leaderboard-rank">3</div>
-              <div class="leaderboard-name">Dmitry S.</div>
-              <div class="leaderboard-score">
-                <img src="img/icons/circle-half-icons.svg" alt="Partial" style="width: 20px; height: 20px; object-fit: contain; display: inline-block; vertical-align: middle; filter: brightness(0) saturate(100%) invert(25%) sepia(95%) saturate(2000%) hue-rotate(145deg) brightness(95%) contrast(90%);">
-                Partial
-              </div>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
@@ -259,117 +192,37 @@
   <section class="section archive-section">
     <div class="container">
       <h2 class="section-title">Past Years Archive</h2>
-      <p class="section-subtitle">Browse verified problems and solutions from previous olympiads</p>
-      
-      <div class="archive-controls">
-        <button class="archive-filter active" onclick="filterArchive('all')">All Years</button>
-        <button class="archive-filter" onclick="filterArchive('school')">School Stage</button>
-        <button class="archive-filter" onclick="filterArchive('regional')">Regional Stage</button>
-        <button class="archive-filter" onclick="filterArchive('national')">National Stage</button>
-      </div>
+      <p class="section-subtitle">Problems of the Republican Olympiad and its third stage, as PDF files</p>
       
       <div class="archive-grid">
+        <a href="archive/2025/" class="archive-card">
+          <div class="archive-year">2025</div>
+          <div class="archive-info">17 PDF files</div>
+        </a>
         <a href="archive/2024/" class="archive-card">
           <div class="archive-year">2024</div>
-          <div class="archive-info">12 problems</div>
+          <div class="archive-info">18 PDF files</div>
         </a>
         <a href="archive/2023/" class="archive-card">
           <div class="archive-year">2023</div>
-          <div class="archive-info">15 problems</div>
+          <div class="archive-info">22 PDF files</div>
         </a>
         <a href="archive/2022/" class="archive-card">
           <div class="archive-year">2022</div>
-          <div class="archive-info">14 problems</div>
+          <div class="archive-info">15 PDF files</div>
         </a>
         <a href="archive/2021/" class="archive-card">
           <div class="archive-year">2021</div>
-          <div class="archive-info">13 problems</div>
+          <div class="archive-info">33 PDF files</div>
         </a>
-        <a href="archive/2020/" class="archive-card">
-          <div class="archive-year">2020</div>
-          <div class="archive-info">16 problems</div>
-        </a>
-        <a href="archive/2019/" class="archive-card">
-          <div class="archive-year">2019</div>
-          <div class="archive-info">12 problems</div>
+        <a href="archive/2018/" class="archive-card">
+          <div class="archive-year">2018</div>
+          <div class="archive-info">2 PDF files</div>
         </a>
       </div>
       
-    </div>
-  </section>
-
-  <!-- Operational Section -->
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">For Organizers and Educators</h2>
-      <p class="section-subtitle">Professional tools for contest organization and student assignment management</p>
-      
-      <div class="operational-grid">
-        <div class="operational-card">
-          <div>
-            <div class="operational-icon">
-              <img src="img/icons/Calendar_icon_24.svg" alt="Calendar" style="width: 56px; height: 56px; object-fit: contain;">
-            </div>
-            <h3 class="operational-title">Contest Organization</h3>
-          </div>
-          <p class="operational-description">
-            Organize school or regional mathematics contests using our comprehensive platform. Configure problems, manage participants, and generate results automatically.
-          </p>
-          <a href="organize/" class="btn-track">
-            Access Organizer Suite
-          </a>
-        </div>
-        
-        <div class="operational-card">
-          <div>
-            <div class="operational-icon">
-              <img src="img/icons/Noun_Project_teacher_icon_690952_cc.svg" alt="Teacher" style="width: 56px; height: 56px; object-fit: contain;">
-            </div>
-            <h3 class="operational-title">Teacher Assignment Portal</h3>
-          </div>
-          <p class="operational-description">
-            Create custom problem sets for your students. Track progress, provide feedback, and build structured learning paths tailored to your classroom needs.
-          </p>
-          <a href="teachers/" class="btn-track">
-            Access Teacher Portal
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Proof Tiles Section -->
-  <section class="section proof-section">
-    <div class="container">
-      <h2 class="section-title">BelMath by the Numbers</h2>
-      
-      <div class="proof-grid">
-        <div class="proof-tile">
-          <div class="proof-number">1,247</div>
-          <div class="proof-label">Problems in Bank</div>
-        </div>
-        <div class="proof-tile">
-          <div class="proof-number">892</div>
-          <div class="proof-label">Solutions Reviewed</div>
-        </div>
-        <div class="proof-tile">
-          <div class="proof-number">156</div>
-          <div class="proof-label">Schools Using BelMath</div>
-        </div>
-        <div class="proof-tile">
-          <div class="proof-number">23</div>
-          <div class="proof-label">Regions Covered</div>
-        </div>
-        <div class="proof-tile">
-          <div class="proof-number">42</div>
-          <div class="proof-label">Weeks Active</div>
-        </div>
-        <div class="proof-tile">
-          <div class="proof-number" style="font-size: 20px; line-height: 1.4;">
-            Updated<br>Today
-          </div>
-          <div class="proof-label">Last Updated</div>
-        </div>
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="archive/" class="btn-track">All Years</a>
       </div>
     </div>
   </section>
@@ -386,8 +239,8 @@
         </div>
         <div>
           <p>
-            Training programs, competitive contests, and verified archives<br>
-            Designed for students without access to elite coaching
+            Olympiad problems and team selection tests<br>
+            Archive since 1995
           </p>
         </div>
         <div>
@@ -403,79 +256,7 @@
     </div>
   </footer>
 
-  <script>
-    // Problem of the Week submission
-    function submitPotw() {
-      const answer = document.getElementById('potw-answer').value;
-      if (answer.trim()) {
-        alert('Thank you for your submission! We\'ll review it shortly.');
-        document.getElementById('potw-answer').value = '';
-      } else {
-        alert('Please enter your answer or solution approach.');
-      }
-    }
-
-    // Archive filtering
-    function filterArchive(type) {
-      document.querySelectorAll('.archive-filter').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      event.target.classList.add('active');
-      // Filter logic would go here
-      console.log('Filtering by:', type);
-    }
-
-    // Mobile navigation toggle
-    document.addEventListener('DOMContentLoaded', function() {
-      const mobileNavToggle = document.getElementById('mobile-nav-toggle');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const mobileMenuClose = document.getElementById('mobile-menu-close');
-      
-      if (mobileNavToggle && mobileMenu) {
-        mobileNavToggle.addEventListener('click', function() {
-          mobileMenu.classList.add('active');
-          document.body.style.overflow = 'hidden';
-        });
-      }
-      
-      if (mobileMenuClose && mobileMenu) {
-        mobileMenuClose.addEventListener('click', function() {
-          mobileMenu.classList.remove('active');
-          document.body.style.overflow = '';
-        });
-      }
-      
-      // Close menu when clicking outside
-      if (mobileMenu) {
-        mobileMenu.addEventListener('click', function(e) {
-          if (e.target === mobileMenu) {
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
-          }
-        });
-      }
-      
-      // Close menu when clicking on a link
-      const mobileMenuLinks = document.querySelectorAll('.mobile-menu-links a');
-      mobileMenuLinks.forEach(link => {
-        link.addEventListener('click', function() {
-          mobileMenu.classList.remove('active');
-          document.body.style.overflow = '';
-        });
-      });
-    });
-
-    // Update last updated date
-    document.addEventListener('DOMContentLoaded', function() {
-      const today = new Date();
-      const dateStr = today.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric',
-        year: 'numeric'
-      });
-      // This would update the "Last Updated" tile if needed
-    });
-  </script>
+  <script src="i18n.js"></script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HE93GE7BH5"></script>
   <script src="ga.js"></script>

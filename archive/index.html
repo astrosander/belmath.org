@@ -3,8 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      var lang = null;
+      try {
+        var q = new URLSearchParams(location.search).get('lang');
+        if (q === 'en' || q === 'ru') { localStorage.setItem('lang', q); }
+        lang = localStorage.getItem('lang');
+      } catch (e) {}
+      if (lang !== 'en' && lang !== 'ru') {
+        var first = ((navigator.languages && navigator.languages[0]) || navigator.language || 'en').toLowerCase();
+        lang = (first.indexOf('ru') === 0 || first.indexOf('be') === 0) ? 'ru' : 'en';
+      }
+      document.documentElement.lang = lang;
+      if (lang === 'ru') {
+        var h = document.documentElement;
+        h.className += ' i18n-pending';
+        setTimeout(function () { h.className = h.className.replace(' i18n-pending', ''); }, 1500);
+      }
+    })();
+  </script>
   <title>Archive — BelMath</title>
-  <meta name="description" content="Browse verified problems and solutions from previous olympiads">
+  <meta name="description" content="Problems of the Republican Olympiad, its third stage and team selection tests, as PDF files">
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:image" content="../img/logo.png">
@@ -27,12 +47,15 @@
         <nav>
           <ul class="nav-links">
             <li><a href="../">Home</a></li>
-            <li><a href="../tracks/">Training Tracks</a></li>
-            <li><a href="../contests/">Contests</a></li>
             <li><a href="./" class="active">Archive</a></li>
           </ul>
         </nav>
-        <div class="mobile-nav" id="mobile-nav-toggle">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-set-lang="en">EN</button>
+          <span aria-hidden="true">|</span>
+          <button type="button" data-set-lang="ru">RU</button>
+        </div>
+        <div class="mobile-nav" id="mobile-nav-toggle" role="button" tabindex="0" aria-label="Open menu">
           <i class="fas fa-bars"></i>
         </div>
       </div>
@@ -41,138 +64,133 @@
 
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobile-menu">
-    <button class="mobile-menu-close" id="mobile-menu-close">
+    <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">
       <i class="fas fa-times"></i>
     </button>
     <ul class="mobile-menu-links">
       <li><a href="../">Home</a></li>
-      <li><a href="../tracks/">Training Tracks</a></li>
-      <li><a href="../contests/">Contests</a></li>
       <li><a href="./" class="active">Archive</a></li>
     </ul>
+    <div class="lang-switch lang-switch-mobile" role="group" aria-label="Language">
+      <button type="button" data-set-lang="en">EN</button>
+      <span aria-hidden="true">|</span>
+      <button type="button" data-set-lang="ru">RU</button>
+    </div>
   </div>
 
   <section class="section archive-section" style="padding-top: 40px;">
     <div class="container">
       <h1 class="section-title">Past Years Archive</h1>
-      <p class="section-subtitle">Browse verified problems and solutions from previous olympiads</p>
+      <p class="section-subtitle">Problems of the Republican Olympiad, its third stage and team selection tests, as PDF files</p>
       
       <div class="archive-grid" style="margin-top: 32px;">
         <a href="2025/" class="archive-card">
           <div class="archive-year">2025</div>
-          <div class="archive-info">Problem sets</div>
+          <div class="archive-info">17 PDF files</div>
         </a>
         <a href="2024/" class="archive-card">
           <div class="archive-year">2024</div>
-          <div class="archive-info">Problem sets</div>
+          <div class="archive-info">18 PDF files</div>
         </a>
         <a href="2023/" class="archive-card">
           <div class="archive-year">2023</div>
-          <div class="archive-info">Problem sets</div>
+          <div class="archive-info">22 PDF files</div>
         </a>
         <a href="2022/" class="archive-card">
           <div class="archive-year">2022</div>
-          <div class="archive-info">Problem sets</div>
+          <div class="archive-info">15 PDF files</div>
         </a>
         <a href="2021/" class="archive-card">
           <div class="archive-year">2021</div>
-          <div class="archive-info">Problem sets</div>
-        </a>
-        <a href="2020/" class="archive-card">
-          <div class="archive-year">2020</div>
-          <div class="archive-info">Problem sets</div>
-        </a>
-        <a href="2019/" class="archive-card">
-          <div class="archive-year">2019</div>
-          <div class="archive-info">Problem sets</div>
+          <div class="archive-info">33 PDF files</div>
         </a>
         <a href="2018/" class="archive-card">
           <div class="archive-year">2018</div>
-          <div class="archive-info">2 rounds</div>
+          <div class="archive-info">2 PDF files</div>
         </a>
         <a href="2017/" class="archive-card">
           <div class="archive-year">2017</div>
-          <div class="archive-info">2 rounds</div>
+          <div class="archive-info">2 PDF files</div>
         </a>
         <a href="2016/" class="archive-card">
           <div class="archive-year">2016</div>
-          <div class="archive-info">1 round</div>
+          <div class="archive-info">1 PDF file</div>
         </a>
         <a href="2015/" class="archive-card">
           <div class="archive-year">2015</div>
-          <div class="archive-info">1 round</div>
+          <div class="archive-info">1 PDF file</div>
         </a>
         <a href="2014/" class="archive-card">
           <div class="archive-year">2014</div>
-          <div class="archive-info">2 rounds</div>
+          <div class="archive-info">2 PDF files</div>
         </a>
         <a href="2013/" class="archive-card">
           <div class="archive-year">2013</div>
-          <div class="archive-info">2 rounds</div>
+          <div class="archive-info">2 PDF files</div>
         </a>
         <a href="2012/" class="archive-card">
           <div class="archive-year">2012</div>
-          <div class="archive-info">2 rounds</div>
+          <div class="archive-info">2 PDF files</div>
         </a>
         <a href="2011/" class="archive-card">
           <div class="archive-year">2011</div>
-          <div class="archive-info">2 rounds</div>
+          <div class="archive-info">2 PDF files</div>
         </a>
         <a href="2010/" class="archive-card">
           <div class="archive-year">2010</div>
-          <div class="archive-info">2 rounds</div>
+          <div class="archive-info">2 PDF files</div>
         </a>
         <a href="2009/" class="archive-card">
           <div class="archive-year">2009</div>
-          <div class="archive-info">2 rounds</div>
+          <div class="archive-info">2 PDF files</div>
         </a>
         <a href="2008/" class="archive-card">
           <div class="archive-year">2008</div>
-          <div class="archive-info">2 rounds</div>
+          <div class="archive-info">2 PDF files</div>
         </a>
         <a href="2007/" class="archive-card">
           <div class="archive-year">2007</div>
-          <div class="archive-info">Problem sets</div>
+          <div class="archive-info">3 PDF files</div>
         </a>
         <a href="2006/" class="archive-card">
           <div class="archive-year">2006</div>
-          <div class="archive-info">2 rounds</div>
+          <div class="archive-info">2 PDF files</div>
         </a>
         <a href="2005/" class="archive-card">
           <div class="archive-year">2005</div>
-          <div class="archive-info">Problem sets</div>
+          <div class="archive-info">3 PDF files</div>
         </a>
         <a href="2004/" class="archive-card">
           <div class="archive-year">2004</div>
-          <div class="archive-info">Problem sets</div>
+          <div class="archive-info">2 PDF files</div>
         </a>
         <a href="2003/" class="archive-card">
           <div class="archive-year">2003</div>
-          <div class="archive-info">1 round</div>
+          <div class="archive-info">1 PDF file</div>
         </a>
         <a href="2002/" class="archive-card">
           <div class="archive-year">2002</div>
-          <div class="archive-info">1 round</div>
+          <div class="archive-info">1 PDF file</div>
         </a>
         <a href="2001/" class="archive-card">
           <div class="archive-year">2001</div>
-          <div class="archive-info">1 round</div>
+          <div class="archive-info">1 PDF file</div>
         </a>
         <a href="2000/" class="archive-card">
           <div class="archive-year">2000</div>
-          <div class="archive-info">Problem sets</div>
+          <div class="archive-info">3 PDF files</div>
         </a>
         <a href="1999/" class="archive-card">
           <div class="archive-year">1999</div>
-          <div class="archive-info">Problem sets</div>
+          <div class="archive-info">1 PDF file</div>
         </a>
         <a href="1997/" class="archive-card">
           <div class="archive-year">1997</div>
-          <div class="archive-info">Problem sets</div>
+          <div class="archive-info">1 PDF file</div>
         </a>
         <a href="1995/" class="archive-card">
           <div class="archive-year">1995</div>
-          <div class="archive-info">Problem sets</div>
+          <div class="archive-info">2 PDF files</div>
         </a>
       </div>
     </div>
@@ -188,14 +206,7 @@
     </div>
   </footer>
 
-  <script>
-    function filterArchive(type) {
-      document.querySelectorAll('.archive-filter').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      event.target.classList.add('active');
-    }
-  </script>
+  <script src="../i18n.js"></script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HE93GE7BH5"></script>
   <script src="../ga.js"></script>

@@ -3,7 +3,28 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script>
+    (function () {
+      var lang = null;
+      try {
+        var q = new URLSearchParams(location.search).get('lang');
+        if (q === 'en' || q === 'ru') { localStorage.setItem('lang', q); }
+        lang = localStorage.getItem('lang');
+      } catch (e) {}
+      if (lang !== 'en' && lang !== 'ru') {
+        var first = ((navigator.languages && navigator.languages[0]) || navigator.language || 'en').toLowerCase();
+        lang = (first.indexOf('ru') === 0 || first.indexOf('be') === 0) ? 'ru' : 'en';
+      }
+      document.documentElement.lang = lang;
+      if (lang === 'ru') {
+        var h = document.documentElement;
+        h.className += ' i18n-pending';
+        setTimeout(function () { h.className = h.className.replace(' i18n-pending', ''); }, 1500);
+      }
+    })();
+  </script>
   <title>404 — Page Not Found</title>
+  <meta http-equiv="refresh" content="8; url=/">
   <meta name="robots" content="noindex" />
   <style>
     :root { color-scheme: light dark; }
@@ -16,6 +37,7 @@
       background: linear-gradient(135deg, rgba(0,0,0,.04), rgba(0,0,0,.0));
     }
     .wrap {
+      box-sizing: border-box;
       width: min(980px, 92vw);
       display: grid;
       gap: 24px;
@@ -96,6 +118,31 @@
       font-size: 13px;
       opacity: 0.65;
     }
+    html.i18n-pending body { visibility: hidden; }
+    .lang-switch {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 0.8;
+    }
+    @media (max-width: 820px) {
+      .lang-switch { justify-content: center; }
+    }
+    .lang-switch button {
+      background: none;
+      border: none;
+      padding: 4px 6px;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+    }
+    .lang-switch button[aria-pressed="true"] {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
     @media (prefers-color-scheme: dark) {
       .wrap { background: rgba(18,18,18,.65); }
       a.primary { background: rgba(255,255,255,.90); color: #111; }
@@ -106,9 +153,15 @@
 <body>
   <main class="wrap" role="main">
     <section>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-set-lang="en">EN</button>
+        <span aria-hidden="true">|</span>
+        <button type="button" data-set-lang="ru">RU</button>
+      </div>
       <h1>404</h1>
       <h2>URL not found</h2>
       <p>The page you’re looking for doesn’t exist or was moved.</p>
+      <p class="hint">You will be redirected to the home page in a few seconds.</p>
 
       <div class="actions">
         <a class="btn primary" href="/">Go to Home</a>
@@ -117,9 +170,10 @@
 
     </section>
 
-    <figure class="img" aria-label="404 image">
-      <img src="https://belmath.org/img/team/imo_2023.jpg" alt="Team photo (IMO 2023)" loading="eager" />
+    <figure class="img">
+      <img src="/img/team/imo_2023.jpg" alt="Team photo (IMO 2023)" loading="eager" />
     </figure>
   </main>
+  <script src="/i18n.js"></script>
 </body>
 </html>
